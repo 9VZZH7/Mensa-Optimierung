@@ -15,13 +15,19 @@ class VehicleGenerator:
         # Calculate properties
         self.init_properties()
 
-    def set_default_config(self):
+    def set_default_config(self,rate = 20):
         """Set default configuration"""
-        self.vehicle_rate = 20
+        if rate == 'variable':
+            self.vehicle_rate = self.variable_vehicle_rate
+        else:
+            self.vehicle_rate = rate
         self.vehicles = [
             (1, {})
         ]
         self.last_added_time = 0
+    
+    def variable_vehicle_rate(self,dt):
+        return 20
 
     def init_properties(self):
         self.upcoming_vehicle = self.generate_vehicle()
