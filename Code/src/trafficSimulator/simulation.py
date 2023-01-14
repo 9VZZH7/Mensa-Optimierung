@@ -22,8 +22,8 @@ class Simulation:
         self.traffic_signals = []
         self.vehicle_dist = []
 
-    def create_road(self, start, end):
-        road = Road(start, end)
+    def create_road(self, start, end, merging = False):
+        road = Road(start, end, merging, self)
         self.roads.append(road)
         return road
 

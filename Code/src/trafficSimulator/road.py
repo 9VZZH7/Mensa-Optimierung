@@ -2,9 +2,13 @@ from scipy.spatial import distance
 from collections import deque
 
 class Road:
-    def __init__(self, start, end):
+    def __init__(self, start, end, merging, sim):
         self.start = start
         self.end = end
+        self.sim = sim
+        
+        self.is_merging = merging
+        self.merging_queue = deque()
 
         self.vehicles = deque()
 
@@ -40,7 +44,16 @@ class Road:
                 lead = self.vehicles[i-1]
                 self.vehicles[i].update(lead, dt)
 
-             # Check for traffic signal
+            # Check merging road
+            first = self.vehicles[0] 
+            if first.current_road_index < len(first.path) - 1:
+                next_road = self.sim.roads[first.path[first.current_road_index + 1]]
+                if next_road.is_merging:
+                    next_road.merging_queue.append(first)
+                    if next_road.merging_queue.index(first) == 0:
+                        print('Vehicle can pass')
+            
+            # Check for traffic signal
             if self.traffic_signal_state:
                 # If traffic signal is green or doesn't exist
                 # Then let vehicles pass

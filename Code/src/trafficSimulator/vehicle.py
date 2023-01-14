@@ -4,6 +4,7 @@ class Vehicle:
     def __init__(self, config={}):
         # Set default configuration
         self.set_default_config()
+        #self.sim = sim
 
         # Update configuration
         for attr, val in config.items():
