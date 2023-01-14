@@ -9,7 +9,7 @@ a = 2
 b = 20
 c = 5
 r = 10
-l = 300
+l = 30
 
 # Nodes
 WEST_RIGHT_START = (-b-l, a-c)
