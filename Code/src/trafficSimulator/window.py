@@ -311,10 +311,10 @@ class Window:
             text_fps = self.text_font.render(f'Uhrzeit = {hours}:0{mins}:{sec}', False, (0, 0, 0))
         else: 
             text_fps = self.text_font.render(f'Uhrzeit = {hours}:{mins}:{sec}', False, (0, 0, 0))
-        text_frc = self.text_font.render(f'n = {self.sim.frame_count}', False, (0, 0, 0))
+        text_vhc = self.text_font.render(f'Studenten = {self.sim.num_vehicles}', False, (0, 0, 0))
         
         self.screen.blit(text_fps, (0, 0))
-        #self.screen.blit(text_frc, (100, 0))
+        self.screen.blit(text_vhc, (0, 15))
 
 
     def draw(self):
