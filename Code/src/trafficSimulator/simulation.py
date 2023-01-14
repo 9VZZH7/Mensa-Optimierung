@@ -20,6 +20,7 @@ class Simulation:
         self.roads = []         # Array to store roads
         self.generators = []
         self.traffic_signals = []
+        self.vehicle_dist = []
 
     def create_road(self, start, end):
         road = Road(start, end)
@@ -78,6 +79,7 @@ class Simulation:
         # Increment time
         self.t += self.dt
         self.frame_count += 1
+        self.vehicle_dist.append(self.num_vehicles)
 
 
     def run(self, steps):

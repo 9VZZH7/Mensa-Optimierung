@@ -106,7 +106,7 @@ sim.create_roads([
 def road(a): return range(a, a+n)
 
 sim.create_gen({
-    'vehicle_rate': 30,
+    'vehicle_rate': 'variable',
     'vehicles': [
         [2, {'path': [0, *road(12), *road(12+4*n), 10, 6]}],
         [1, {'path': [0, *road(12), 9, 5]}],
@@ -130,4 +130,4 @@ sim.create_gen({
 # Start simulation
 win = Window(sim)
 win.zoom = 10
-win.run(steps_per_update=5)
+win.run(steps_per_update=100)

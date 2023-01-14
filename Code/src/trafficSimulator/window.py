@@ -82,7 +82,9 @@ class Window:
                         x2, y2 = pygame.mouse.get_pos()
                         self.offset = ((x2-x1)/self.zoom, (y2-y1)/self.zoom)
                 elif event.type == pygame.MOUSEBUTTONUP:
-                    self.mouse_down = False           
+                    self.mouse_down = False 
+            if self.sim.frame_count >= 9600:
+                running = False
 
     def run(self, steps_per_update=1):
         """Runs the simulation by updating in every loop."""
@@ -304,9 +306,9 @@ class Window:
                         color=color)
 
     def draw_status(self):
-        hours = 11 + (self.sim.frame_count // 60) // 60
+        hours = 11 + int((self.sim.frame_count / 60 + 30) / 60)
         mins = int((self.sim.frame_count) // 60 + 30) % 60
-        sec = int((self.sim.frame_count + 30) % 60) 
+        sec = int((self.sim.frame_count) % 60) 
         if mins < 10:
             text_fps = self.text_font.render(f'Uhrzeit = {hours}:0{mins}:{sec}', False, (0, 0, 0))
         else: 

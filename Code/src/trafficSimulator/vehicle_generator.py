@@ -1,10 +1,11 @@
 from .vehicle import Vehicle
 from numpy.random import randint
+import numpy as np
 
 class VehicleGenerator:
     def __init__(self, sim, config={}):
         self.sim = sim
-
+        
         # Set default configurations
         self.set_default_config()
 
@@ -15,19 +16,18 @@ class VehicleGenerator:
         # Calculate properties
         self.init_properties()
 
-    def set_default_config(self,rate = 20):
+    def set_default_config(self):
         """Set default configuration"""
-        if rate == 'variable':
-            self.vehicle_rate = self.variable_vehicle_rate
-        else:
-            self.vehicle_rate = rate
         self.vehicles = [
             (1, {})
         ]
         self.last_added_time = 0
     
-    def variable_vehicle_rate(self,dt):
-        return 20
+    def variable_vehicle_rate(self,t):
+        if self.vehicle_rate == 'variable': 
+            return abs(np.sin(np.pi * t / 9600)) * 100 + 1
+        else: 
+            return self.vehicle_rate
 
     def init_properties(self):
         self.upcoming_vehicle = self.generate_vehicle()
@@ -43,7 +43,7 @@ class VehicleGenerator:
 
     def update(self):
         """Add vehicles"""
-        if self.sim.t - self.last_added_time >= 60 / self.vehicle_rate:
+        if self.sim.t - self.last_added_time >= 60 / self.variable_vehicle_rate(self.sim.frame_count):
             # If time elasped after last added vehicle is
             # greater than vehicle_period; generate a vehicle
             road = self.sim.roads[self.upcoming_vehicle.path[0]]      
