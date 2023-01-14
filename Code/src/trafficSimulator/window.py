@@ -304,11 +304,17 @@ class Window:
                         color=color)
 
     def draw_status(self):
-        text_fps = self.text_font.render(f't={self.sim.t:.5}', False, (0, 0, 0))
-        text_frc = self.text_font.render(f'n={self.sim.frame_count}', False, (0, 0, 0))
+        hours = 11 + (self.sim.frame_count // 60) // 60
+        mins = int((self.sim.frame_count) // 60 + 30) % 60
+        sec = int((self.sim.frame_count + 30) % 60) 
+        if mins < 10:
+            text_fps = self.text_font.render(f'Uhrzeit = {hours}:0{mins}:{sec}', False, (0, 0, 0))
+        else: 
+            text_fps = self.text_font.render(f'Uhrzeit = {hours}:{mins}:{sec}', False, (0, 0, 0))
+        text_frc = self.text_font.render(f'n = {self.sim.frame_count}', False, (0, 0, 0))
         
         self.screen.blit(text_fps, (0, 0))
-        self.screen.blit(text_frc, (100, 0))
+        #self.screen.blit(text_frc, (100, 0))
 
 
     def draw(self):
