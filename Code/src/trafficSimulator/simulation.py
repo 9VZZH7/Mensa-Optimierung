@@ -75,7 +75,7 @@ class Simulation:
                 else:
                     self.num_vehicles -= 1
                 # In all cases, remove it from its road
-                road.vehicles.popleft() 
+                road.vehicles.popleft()
         # Increment time
         self.t += self.dt
         self.frame_count += 1
