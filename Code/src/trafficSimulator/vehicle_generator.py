@@ -30,9 +30,7 @@ class VehicleGenerator:
             t = np.array([0, 0, 0, 0, 45, 70, 80, 100, 115, 155, 155, 155, 155] )
             c = [96, 197.66604206, -87.57521343, 145.25315264, -30.11543723, 180.5093985, -124.12274568, 265.26061658, 3, 0, 0, 0, 0] 
             k = 3
-            fun = ip.BSpline(t,c,k)
-            
-            return fun(time / 60)
+            return ip.BSpline(t,c,k)(time/60)
         else: 
             return self.vehicle_rate
 
