@@ -15,10 +15,10 @@ class Vehicle:
 
     def set_default_config(self):    
         self.l = 4
-        self.s0 = 4
+        self.s0 = 2
         self.T = 1
         self.v_max = 16.6
-        self.a_max = 1.44
+        self.a_max = 10 # 1.44
         self.b_max = 4.61
 
         self.path = []
