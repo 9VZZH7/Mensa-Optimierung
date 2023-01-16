@@ -1,6 +1,7 @@
 from .vehicle import Vehicle
 from numpy.random import randint
 import numpy as np
+from scipy import interpolate as ip
 
 class VehicleGenerator:
     def __init__(self, sim, config={}):
@@ -23,9 +24,15 @@ class VehicleGenerator:
         ]
         self.last_added_time = 0
     
-    def variable_vehicle_rate(self,t):
+    def variable_vehicle_rate(self,time):
         if self.vehicle_rate == 'variable': 
-            return abs(np.sin(np.pi * t / 9600)) * 100 + 1
+            if(time>=9300): return 0.01
+            t = np.array([0, 0, 0, 0, 45, 70, 80, 100, 115, 155, 155, 155, 155] )
+            c = [96, 197.66604206, -87.57521343, 145.25315264, -30.11543723, 180.5093985, -124.12274568, 265.26061658, 3, 0, 0, 0, 0] 
+            k = 3
+            fun = ip.BSpline(t,c,k)
+            
+            return fun(time / 60)
         else: 
             return self.vehicle_rate
 

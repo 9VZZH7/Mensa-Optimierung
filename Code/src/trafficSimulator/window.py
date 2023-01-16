@@ -83,7 +83,7 @@ class Window:
                         self.offset = ((x2-x1)/self.zoom, (y2-y1)/self.zoom)
                 elif event.type == pygame.MOUSEBUTTONUP:
                     self.mouse_down = False 
-            if self.sim.frame_count >= 9600:
+            if self.sim.frame_count >= 10200:
                 running = False
 
     def run(self, steps_per_update=1):
