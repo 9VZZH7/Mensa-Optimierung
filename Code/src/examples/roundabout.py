@@ -56,10 +56,10 @@ SOUTH_INBOUND = (SOUTH_RIGHT_START, SOUTH_RIGHT)
 EAST_INBOUND = (EAST_RIGHT_START, EAST_RIGHT)
 NORTH_INBOUND = (NORTH_RIGHT_START, NORTH_RIGHT)
 
-WEST_OUTBOUND = (WEST_LEFT, WEST_LEFT_START)
-SOUTH_OUTBOUND = (SOUTH_LEFT, SOUTH_LEFT_START)
-EAST_OUTBOUND = (EAST_LEFT, EAST_LEFT_START)
-NORTH_OUTBOUND = (NORTH_LEFT, NORTH_LEFT_START)
+WEST_OUTBOUND = (WEST_LEFT, WEST_LEFT_START, True)
+SOUTH_OUTBOUND = (SOUTH_LEFT, SOUTH_LEFT_START, True)
+EAST_OUTBOUND = (EAST_LEFT, EAST_LEFT_START, True)
+NORTH_OUTBOUND = (NORTH_LEFT, NORTH_LEFT_START, True)
 
 WEST_LEFT_TURN = (NORTH, WEST_LEFT)
 SOUTH_LEFT_TURN = (WEST, SOUTH_LEFT)
@@ -106,7 +106,7 @@ sim.create_roads([
 def road(a): return range(a, a+n)
 
 sim.create_gen({
-    'vehicle_rate': 30,
+    'vehicle_rate': 'variable',
     'vehicles': [
         [2, {'path': [0, *road(12), *road(12+4*n), 10, 6]}],
         [1, {'path': [0, *road(12), 9, 5]}],
@@ -130,4 +130,4 @@ sim.create_gen({
 # Start simulation
 win = Window(sim)
 win.zoom = 10
-win.run(steps_per_update=5)
+win.run(steps_per_update=10)

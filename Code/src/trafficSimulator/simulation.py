@@ -16,12 +16,14 @@ class Simulation:
         self.t = 0.0            # Time keeping
         self.frame_count = 0    # Frame count keeping
         self.dt = 1/60          # Simulation time step
+        self.num_vehicles = 0
         self.roads = []         # Array to store roads
         self.generators = []
         self.traffic_signals = []
+        self.vehicle_dist = []
 
-    def create_road(self, start, end):
-        road = Road(start, end)
+    def create_road(self, start, end, merging = False):
+        road = Road(start, end, merging, self)
         self.roads.append(road)
         return road
 
@@ -70,11 +72,14 @@ class Simulation:
                     # Add it to the next road
                     next_road_index = vehicle.path[vehicle.current_road_index]
                     self.roads[next_road_index].vehicles.append(new_vehicle)
+                else:
+                    self.num_vehicles -= 1
                 # In all cases, remove it from its road
-                road.vehicles.popleft() 
+                road.vehicles.popleft()
         # Increment time
         self.t += self.dt
         self.frame_count += 1
+        self.vehicle_dist.append(self.num_vehicles)
 
 
     def run(self, steps):

@@ -2,9 +2,14 @@ from scipy.spatial import distance
 from collections import deque
 
 class Road:
-    def __init__(self, start, end):
+    def __init__(self, start, end, merging, sim):
         self.start = start
         self.end = end
+        self.sim = sim
+        
+        self.is_merging = merging
+        self.merging_queue = deque()
+        self.removed_queue = deque()
 
         self.vehicles = deque()
 
@@ -16,6 +21,9 @@ class Road:
         self.angle_cos = (self.end[0]-self.start[0]) / self.length
         # self.angle = np.arctan2(self.end[1]-self.start[1], self.end[0]-self.start[0])
         self.has_traffic_signal = False
+        self.intersection_slow_factor = 0.4
+        self.intersection_stop_distance = 7
+        self.intersection_slow_distance = 25
 
     def set_traffic_signal(self, signal, group):
         self.traffic_signal = signal
@@ -39,8 +47,12 @@ class Road:
             for i in range(1, n):
                 lead = self.vehicles[i-1]
                 self.vehicles[i].update(lead, dt)
-
-             # Check for traffic signal
+                
+            if self.is_merging and self.vehicles[n - 1].x >= 2 and self.removed_queue.count(self.vehicles[n - 1]) == 0:
+                self.removed_queue.append(self.vehicles[n-1])
+                self.merging_queue.popleft()
+                
+            # Check for traffic signal
             if self.traffic_signal_state:
                 # If traffic signal is green or doesn't exist
                 # Then let vehicles pass
@@ -56,3 +68,27 @@ class Road:
                    self.vehicles[0].x <= self.length - self.traffic_signal.stop_distance / 2:
                     # Stop vehicles in the stop zone
                     self.vehicles[0].stop()
+            
+            # Check merging road
+            first = self.vehicles[0] 
+            if first.current_road_index < len(first.path) - 1:
+                next_road = self.sim.roads[first.path[first.current_road_index + 1]]
+                if next_road.is_merging and (first.x >= self.length - self.intersection_slow_distance):
+                    # add to waiting queue
+                    if next_road.merging_queue.count(first) == 0:
+                        l_before = len(next_road.merging_queue)
+                        next_road.merging_queue.append(first)
+                        assert l_before + 1 == len(next_road.merging_queue)
+                        # slow down if not first
+                    if next_road.merging_queue.index(first) != 0:
+                        factor = (self.length - first.x)/(self.intersection_slow_distance) * self.intersection_slow_factor
+                        first.slow( factor*first._v_max )
+                        if first.x >= self.length - self.intersection_stop_distance and\
+                            first.x <= self.length - self.intersection_stop_distance / 2:
+                            # Stop vehicles in the stop zone
+                            first.stop()
+                    else:
+                        first.unstop()
+                        for vehicle in self.vehicles:
+                            vehicle.unslow()
+            
