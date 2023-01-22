@@ -15,33 +15,33 @@ sim = Simulation()
 n = 15
 
 # Nodes
-STAIRS_WEST = (-390, 420)
+STAIRS_WEST = (-195, 210)
 
-FOOD_ONE_WEST = (-300, 330)
-FOOD_TWO_WEST = (-240, 270)
-FOOD_THREE_WEST = (-60, 210)
+FOOD_ONE_WEST = (-150, 165)
+FOOD_TWO_WEST = (-120, 135)
+FOOD_THREE_WEST = (-30, 105)
 
-INTERSECTION_ONE_TWO_WEST = (-300, 270)
-INTERSECTION_ONE_THREE_WEST = (-300, 210)
-INTERSECTION_TWO_THREE_WEST = (-240, 210)
-INTERSECTION_ALL_WEST = (-180, 90)
+INTERSECTION_ONE_TWO_WEST = (-150, 135)
+INTERSECTION_ONE_THREE_WEST = (-150, 105)
+INTERSECTION_TWO_THREE_WEST = (-120, 105)
+INTERSECTION_ALL_WEST = (-90, 45)
 
-END_WEST = (-180, 0)
+END_WEST = (-90, 0)
 
-STAIRS_EAST = (390, 420)
+STAIRS_EAST = (195, 210)
 
-FOOD_ONE_EAST = (300, 330)
-FOOD_TWO_EAST = (240, 270)
-FOOD_THREE_EAST = (60, 210)
+FOOD_ONE_EAST = (150, 165)
+FOOD_TWO_EAST = (120, 135)
+FOOD_THREE_EAST = (30, 105)
 
-INTERSECTION_ONE_TWO_EAST = (300, 270)
-INTERSECTION_ONE_THREE_EAST = (300, 210)
-INTERSECTION_TWO_THREE_EAST = (240, 210)
-INTERSECTION_ALL_EAST = (180, 90)
+INTERSECTION_ONE_TWO_EAST = (150, 135)
+INTERSECTION_ONE_THREE_EAST = (150, 105)
+INTERSECTION_TWO_THREE_EAST = (120, 105)
+INTERSECTION_ALL_EAST = (90, 45)
 
-END_EAST = (180, 0)
+END_EAST = (90, 0)
 
-CROSS_INTERSECTION = (0, 180)
+CROSS_INTERSECTION = (0, 90)
 
 # Roads
 STAIRS_TO_ONE_WEST = (STAIRS_WEST, FOOD_ONE_WEST)
@@ -116,17 +116,17 @@ sim.create_gen({
     'vehicle_rate': 3,
     'vehicles': [
         [4, {'path': [0, 6, 7, 8, 12]}],
-        [4, {'path': [0, 1, 2, 9, 10, 12]}],
-        [4, {'path': [0, 3, 4, 5, 11, 12]}],
-        [1, {'path': [0, 3, 4, 5, 13, 14]}],
+        [4, {'path': [1, 2, 9, 10, 12]}],
+        [4, {'path': [3, 4, 5, 11, 12]}],
+        [1, {'path': [3, 4, 5, 13, 14, 27]}],
         [1, {'path': [15, 21, 22, 23, 27]}],
-        [1, {'path': [15, 16, 17, 24, 25, 27]}],
-        [1, {'path': [15, 18, 19, 20, 26, 27]}],
-        [1, {'path': [15, 18, 19, 20, 28, 29]}],
+        [1, {'path': [16, 17, 24, 25, 27]}],
+        [1, {'path': [18, 19, 20, 26, 27]}],
+        [1, {'path': [18, 19, 20, 28, 29, 12]}],
     ]
 })
 
 # Start simulation
 win = Window(sim)
-win.zoom = 1
+win.zoom = 2
 win.run(steps_per_update=5)
