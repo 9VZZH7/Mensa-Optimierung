@@ -21,10 +21,11 @@ sim.create_roads([
     ])
 
 sim.create_gen({
-    'vehicle_rate': 90,
+    'vehicle_rate': 20,
+    'vehicle_weight': 'variable',
     'vehicles': [
-        [1, {'path': [0, 2]}],
-        [1, {'path': [1, 2]}]
+        [spawning.essen_1, {'path': [0, 2]}],
+        [spawning.essen_4, {'path': [1, 2]}]
         ]
     })
 

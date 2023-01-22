@@ -33,7 +33,7 @@ class Vehicle:
         self.sqrt_ab = 2*np.sqrt(self.a_max*self.b_max)
         self._v_max = self.v_max
 
-    def update(self, lead, dt):
+    def update(self, lead, dt, isFirst = False, remaining = 0):
         # Update position and velocity
         if self.v + self.a*dt < 0:
             self.x -= 1/2*self.v*self.v/self.a
@@ -44,8 +44,13 @@ class Vehicle:
         
         # Update acceleration
         alpha = 0
-        if lead:
+        if lead and not isFirst:
             delta_x = lead.x - self.x - lead.l
+            delta_v = self.v - lead.v
+
+            alpha = (self.s0 + max(0, self.T*self.v + delta_v*self.v/self.sqrt_ab)) / delta_x
+        elif lead and isFirst:
+            delta_x = lead.x - lead.l + remaining
             delta_v = self.v - lead.v
 
             alpha = (self.s0 + max(0, self.T*self.v + delta_v*self.v/self.sqrt_ab)) / delta_x

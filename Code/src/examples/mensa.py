@@ -100,6 +100,7 @@ def road(a): return range(a, a+n)
 
 sim.create_gen({
     'vehicle_rate': 'variable',
+    'vehicle_weight': 'const', # can be set to varibale. Weight needs to be callable 
     'vehicles': [
         [4, {'path': [0, 2, 4, 7, 9]}],
         [4, {'path': [1, 3, 6, 7, 9]}],

@@ -67,7 +67,7 @@ class Simulation:
                     # Update current road to next road
                     vehicle.current_road_index += 1
                     # Create a copy and reset some vehicle properties
-                    new_vehicle = deepcopy(vehicle)
+                    new_vehicle = vehicle # deepcopy(vehicle)
                     new_vehicle.x = 0
                     # Add it to the next road
                     next_road_index = vehicle.path[vehicle.current_road_index]

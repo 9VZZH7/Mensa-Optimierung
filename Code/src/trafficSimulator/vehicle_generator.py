@@ -23,6 +23,7 @@ class VehicleGenerator:
             (1, {})
         ]
         self.last_added_time = 0
+        self.vehicle_weight = 'const'
     
     def variable_vehicle_rate(self,time):
         if self.vehicle_rate == 'variable': 
@@ -35,14 +36,22 @@ class VehicleGenerator:
             return self.vehicle_rate
 
     def init_properties(self):
-        self.upcoming_vehicle = self.generate_vehicle()
+        self.upcoming_vehicle = self.generate_vehicle(0)
 
-    def generate_vehicle(self):
+    def generate_vehicle(self, time):
         """Returns a random vehicle from self.vehicles with random proportions"""
-        total = sum(pair[0] for pair in self.vehicles)
+        if self.vehicle_weight == 'const':
+            total = sum(pair[0] for pair in self.vehicles)
+        elif self.vehicle_weight == 'variable':
+            total = sum(pair[0](time) for pair in self.vehicles)
+        else:
+            assert False
         r = randint(1, total+1)
         for (weight, config) in self.vehicles:
-            r -= weight
+            if self.vehicle_weight == 'const':
+                r -= weight
+            elif self.vehicle_weight == 'variable':
+                r -= weight(time)
             if r <= 0:
                 return Vehicle(config)
 
@@ -60,5 +69,5 @@ class VehicleGenerator:
                 self.sim.num_vehicles += 1
                 # Reset last_added_time and upcoming_vehicle
                 self.last_added_time = self.sim.t
-            self.upcoming_vehicle = self.generate_vehicle()
+            self.upcoming_vehicle = self.generate_vehicle(self.sim.frame_count)
 

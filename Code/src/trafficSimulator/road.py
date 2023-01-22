@@ -42,7 +42,17 @@ class Road:
 
         if n > 0:
             # Update first vehicle
-            self.vehicles[0].update(None, dt)
+            first = self.vehicles[0] 
+            if first.current_road_index < len(first.path) - 1:
+                next_road = self.sim.roads[first.path[first.current_road_index + 1]]
+                if len(next_road.vehicles) >= 1:
+                    lead = next_road.vehicles[-1]
+                    first.update(lead,dt,isFirst = True,remaining = self.length - first.x)
+                else:
+                    self.vehicles[0].update(None, dt)
+            else: 
+                first.update(None,dt)
+            
             # Update other vehicles
             for i in range(1, n):
                 lead = self.vehicles[i-1]
@@ -70,7 +80,6 @@ class Road:
                     self.vehicles[0].stop()
             
             # Check merging road
-            first = self.vehicles[0] 
             if first.current_road_index < len(first.path) - 1:
                 next_road = self.sim.roads[first.path[first.current_road_index + 1]]
                 if next_road.is_merging and (first.x >= self.length - self.intersection_slow_distance):
