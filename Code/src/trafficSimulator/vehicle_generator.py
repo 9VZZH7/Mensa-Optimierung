@@ -24,6 +24,7 @@ class VehicleGenerator:
         ]
         self.last_added_time = 0
         self.vehicle_weight = 'const'
+        self.v_max = 16.6
     
     def variable_vehicle_rate(self,time):
         if self.vehicle_rate == 'variable': 
@@ -53,7 +54,7 @@ class VehicleGenerator:
             elif self.vehicle_weight == 'variable':
                 r -= weight(time)
             if r <= 0:
-                return Vehicle(config)
+                return Vehicle(config,self.v_max)
 
     def update(self):
         """Add vehicles"""

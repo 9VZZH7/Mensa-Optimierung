@@ -1,7 +1,7 @@
 import numpy as np
 
 class Vehicle:
-    def __init__(self, config={}):
+    def __init__(self, config={}, override_vmax = None):
         # Set default configuration
         self.set_default_config()
         #self.sim = sim
@@ -10,8 +10,12 @@ class Vehicle:
         for attr, val in config.items():
             setattr(self, attr, val)
 
+        if override_vmax is not None:
+            self.v_max = override_vmax
+            
         # Calculate properties
         self.init_properties()
+        
 
     def set_default_config(self):    
         self.l = 4
