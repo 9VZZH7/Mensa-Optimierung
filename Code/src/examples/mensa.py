@@ -15,6 +15,7 @@ sim = Simulation()
 n = 15
 
 # Nodes
+# START_STAIRS_WEST = (-195,250)
 STAIRS_WEST = (-195, 210)
 
 FOOD_ONE_WEST = (-150, 165)
@@ -103,16 +104,16 @@ weights = spawning(ostwest = 0.5,essen3 = 0.5,essen4 = 0.5)
 sim.create_gen({
     'vehicle_rate': 'variable',
     'vehicle_weight': 'variable', # can be set to varibale. Weight needs to be callable 
-    'v_max': 15,
+    'v_max': 16.6,
     'vehicles': [
-        [weights.essen_1, {'path': [0, 2, 4, 7, 9]}],
-        [weights.essen_2, {'path': [1, 3, 6, 7, 9]}],
-        [weights.essen_3_west, {'path': [1, 4, 5, 8, 9]}],
-        [weights.essen_3_ost, {'path': [1, 4, 5, 10, 11, 21]}],
-        [weights.essen_6, {'path': [12, 14, 16, 19, 21]}],
-        [weights.essen_5, {'path': [13, 15, 18, 19, 21]}],
-        [weights.essen_4_ost, {'path': [13, 16, 17, 20, 21]}],
-        [weights.essen_4_west, {'path': [13, 16, 17, 22, 23, 9]}],
+        [weights.essen_1, {'path': [0, 2, 4, 7, 9]}]#,
+        # [weights.essen_2, {'path': [1, 3, 6, 7, 9]}],
+        # [weights.essen_3_west, {'path': [1, 4, 5, 8, 9]}],
+        # [weights.essen_3_ost, {'path': [1, 4, 5, 10, 11, 21]}],
+        # [weights.essen_6, {'path': [12, 14, 16, 19, 21]}],
+        # [weights.essen_5, {'path': [13, 15, 18, 19, 21]}],
+        # [weights.essen_4_ost, {'path': [13, 16, 17, 20, 21]}],
+        # [weights.essen_4_west, {'path': [13, 16, 17, 22, 23, 9]}],
     ]
 })
 

@@ -21,6 +21,7 @@ class Simulation:
         self.generators = []
         self.traffic_signals = []
         self.vehicle_dist = []
+        self.waiting_times = []
 
     def create_road(self, start, end, merging = False):
         road = Road(start, end, merging, self)
@@ -74,6 +75,7 @@ class Simulation:
                     self.roads[next_road_index].vehicles.append(new_vehicle)
                 else:
                     self.num_vehicles -= 1
+                    self.waiting_times.append(self.frame_count - vehicle.die())
                 # In all cases, remove it from its road
                 road.vehicles.popleft()
         # Increment time

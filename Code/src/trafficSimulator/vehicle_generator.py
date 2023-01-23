@@ -54,7 +54,7 @@ class VehicleGenerator:
             elif self.vehicle_weight == 'variable':
                 r -= weight(time)
             if r <= 0:
-                return Vehicle(config,self.v_max)
+                return Vehicle(config,self.v_max,time)
 
     def update(self):
         """Add vehicles"""

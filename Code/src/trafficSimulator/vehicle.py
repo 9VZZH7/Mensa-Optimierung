@@ -1,7 +1,7 @@
 import numpy as np
 
 class Vehicle:
-    def __init__(self, config={}, override_vmax = None):
+    def __init__(self, config={}, override_vmax = None, time_started = 0):
         # Set default configuration
         self.set_default_config()
         #self.sim = sim
@@ -13,6 +13,8 @@ class Vehicle:
         if override_vmax is not None:
             self.v_max = override_vmax
             
+        self.time_started = time_started
+        
         # Calculate properties
         self.init_properties()
         
@@ -22,8 +24,8 @@ class Vehicle:
         self.s0 = 2
         self.T = 1
         self.v_max = 16.6
-        self.a_max = 10 # 1.44
-        self.b_max = 4.61
+        self.a_max = 50 # 1.44
+        self.b_max = 10
 
         self.path = []
         self.current_road_index = 0
@@ -76,4 +78,5 @@ class Vehicle:
     def unslow(self):
         self.v_max = self._v_max
         
-
+    def die(self):
+        return self.time_started
