@@ -100,16 +100,16 @@ def road(a): return range(a, a+n)
 
 sim.create_gen({
     'vehicle_rate': 'variable',
-    'vehicle_weight': 'const', # can be set to varibale. Weight needs to be callable 
+    'vehicle_weight': 'variable', # can be set to varibale. Weight needs to be callable 
     'vehicles': [
-        [4, {'path': [0, 2, 4, 7, 9]}],
-        [4, {'path': [1, 3, 6, 7, 9]}],
-        [4, {'path': [1, 4, 5, 8, 9]}],
-        [1, {'path': [1, 4, 5, 10, 11, 21]}],
-        [1, {'path': [12, 14, 16, 19, 21]}],
-        [1, {'path': [13, 15, 18, 19, 21]}],
-        [1, {'path': [13, 16, 17, 20, 21]}],
-        [1, {'path': [13, 16, 17, 22, 23, 9]}],
+        [spawning.essen_1, {'path': [0, 2, 4, 7, 9]}],
+        [spawning.essen_2, {'path': [1, 3, 6, 7, 9]}],
+        [spawning.essen_3, {'path': [1, 4, 5, 8, 9]}],
+        [spawning.essen_3, {'path': [1, 4, 5, 10, 11, 21]}],
+        [spawning.essen_6, {'path': [12, 14, 16, 19, 21]}],
+        [spawning.essen_5, {'path': [13, 15, 18, 19, 21]}],
+        [spawning.essen_4, {'path': [13, 16, 17, 20, 21]}],
+        [spawning.essen_4, {'path': [13, 16, 17, 22, 23, 9]}],
     ]
 })
 
