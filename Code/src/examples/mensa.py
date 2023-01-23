@@ -16,7 +16,9 @@ n = 15
 
 # Nodes
 # START_STAIRS_WEST = (-195,250)
-STAIRS_WEST = (-195, 210)
+STAIRS_WEST = (-210, 165)
+EDGE_WEST = (-210, 210)
+TRAY_RACK_WEST = (-195, 210)
 
 FOOD_ONE_WEST = (-150, 165)
 FOOD_TWO_WEST = (-120, 135)
@@ -28,7 +30,9 @@ THIRD_INTERSECTION_WEST = (-90, 45)
 
 END_WEST = (-90, 0)
 
-STAIRS_EAST = (195, 210)
+STAIRS_EAST = (210, 165)
+EDGE_EAST = (210, 210)
+TRAY_RACK_EAST = (195, 210)
 
 FOOD_ONE_EAST = (150, 165)
 FOOD_TWO_EAST = (120, 135)
@@ -43,8 +47,10 @@ END_EAST = (90, 0)
 CROSS_INTERSECTION = (0, 90)
 
 # Roads
-STAIRS_TO_ONE_WEST = (STAIRS_WEST, FOOD_ONE_WEST)
-STAIRS_TO_INTERSECT_WEST = (STAIRS_WEST, FIRST_INTERSECTION_WEST)
+STAIRS_TO_EDGE_WEST = (STAIRS_WEST, EDGE_WEST)
+STAIRS_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST)
+RACK_TO_ONE_WEST = (TRAY_RACK_WEST, FOOD_ONE_WEST)
+RACK_TO_INTERSECT_WEST = (TRAY_RACK_WEST, FIRST_INTERSECTION_WEST)
 ONE_TO_INTERSECT_WEST = (FOOD_ONE_WEST, FIRST_INTERSECTION_WEST)
 INTERSECT_TO_TWO_WEST = (FIRST_INTERSECTION_WEST, FOOD_TWO_WEST)
 FIRST_INTERSECT_TO_INTERSECT_WEST = (FIRST_INTERSECTION_WEST, SECOND_INTERSECTION_WEST, True)
@@ -56,8 +62,10 @@ INTERSECT_TO_END_WEST = (THIRD_INTERSECTION_WEST, END_WEST, True)
 THREE_WEST_TO_CROSS_INTERSECT = (FOOD_THREE_WEST, CROSS_INTERSECTION)
 CROSS_INTERSECT_TO_ALL_EAST = (CROSS_INTERSECTION, THIRD_INTERSECTION_EAST)
 
-STAIRS_TO_ONE_EAST = (STAIRS_EAST, FOOD_ONE_EAST)
-STAIRS_TO_INTERSECT_EAST = (STAIRS_EAST, FIRST_INTERSECTION_EAST)
+STAIRS_TO_EDGE_EAST = (STAIRS_EAST, EDGE_EAST)
+STAIRS_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST)
+RACK_TO_ONE_EAST = (TRAY_RACK_EAST, FOOD_ONE_EAST)
+RACK_TO_INTERSECT_EAST = (TRAY_RACK_EAST, FIRST_INTERSECTION_EAST)
 ONE_TO_INTERSECT_EAST = (FOOD_ONE_EAST, FIRST_INTERSECTION_EAST)
 INTERSECT_TO_TWO_EAST = (FIRST_INTERSECTION_EAST, FOOD_TWO_EAST)
 FIRST_INTERSECT_TO_INTERSECT_EAST = (FIRST_INTERSECTION_EAST, SECOND_INTERSECTION_EAST, True)
@@ -71,8 +79,10 @@ CROSS_INTERSECT_TO_ALL_WEST = (CROSS_INTERSECTION, THIRD_INTERSECTION_WEST)
 
 
 sim.create_roads([
-    STAIRS_TO_ONE_WEST,
-    STAIRS_TO_INTERSECT_WEST,
+    STAIRS_TO_EDGE_WEST,
+    STAIRS_TO_RACK_WEST,
+    RACK_TO_ONE_WEST,
+    RACK_TO_INTERSECT_WEST,
     ONE_TO_INTERSECT_WEST,
     INTERSECT_TO_TWO_WEST,
     FIRST_INTERSECT_TO_INTERSECT_WEST,
@@ -83,8 +93,10 @@ sim.create_roads([
     INTERSECT_TO_END_WEST,
     THREE_WEST_TO_CROSS_INTERSECT,
     CROSS_INTERSECT_TO_ALL_EAST,
-    STAIRS_TO_ONE_EAST,
-    STAIRS_TO_INTERSECT_EAST,
+    STAIRS_TO_EDGE_EAST,
+    STAIRS_TO_RACK_EAST,
+    RACK_TO_ONE_EAST,
+    RACK_TO_INTERSECT_EAST,
     ONE_TO_INTERSECT_EAST,
     INTERSECT_TO_TWO_EAST,
     FIRST_INTERSECT_TO_INTERSECT_EAST,
@@ -94,7 +106,7 @@ sim.create_roads([
     THREE_TO_INTERSECT_EAST,
     INTERSECT_TO_END_EAST,
     THREE_EAST_TO_CROSS_INTERSECT,
-    CROSS_INTERSECT_TO_ALL_WEST
+    CROSS_INTERSECT_TO_ALL_WEST,
 ])
 
 def road(a): return range(a, a+n)
@@ -106,14 +118,14 @@ sim.create_gen({
     'vehicle_weight': 'variable', # can be set to varibale. Weight needs to be callable 
     'v_max': 16.6,
     'vehicles': [
-        [weights.essen_1, {'path': [0, 2, 4, 7, 9]}]#,
-        # [weights.essen_2, {'path': [1, 3, 6, 7, 9]}],
-        # [weights.essen_3_west, {'path': [1, 4, 5, 8, 9]}],
-        # [weights.essen_3_ost, {'path': [1, 4, 5, 10, 11, 21]}],
-        # [weights.essen_6, {'path': [12, 14, 16, 19, 21]}],
-        # [weights.essen_5, {'path': [13, 15, 18, 19, 21]}],
-        # [weights.essen_4_ost, {'path': [13, 16, 17, 20, 21]}],
-        # [weights.essen_4_west, {'path': [13, 16, 17, 22, 23, 9]}],
+        [weights.essen_1, {'path': [0, 1, 2, 4, 6, 9, 11]}] # ,
+        # [weights.essen_2, {'path': [0, 1, 3, 5, 8, 9, 11]}],
+        # [weights.essen_3_west, {'path': [0, 1, 3, 6, 7, 10, 11]}],
+        # [weights.essen_3_ost, {'path': [0, 1, 3, 6, 7, 12, 13, 23]}],
+        # [weights.essen_6, {'path': [14, 15, 16, 18, 20, 23, 25]}],
+        # [weights.essen_5, {'path': [14, 15, 17, 19, 22, 23, 25]}],
+        # [weights.essen_4_ost, {'path': [14, 15, 17, 20, 21, 24, 25]}],
+        # [weights.essen_4_west, {'path': [14, 15, 17, 20, 21, 26, 27, 11]}],
     ]
 })
 
