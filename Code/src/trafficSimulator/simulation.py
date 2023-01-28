@@ -18,6 +18,8 @@ class Simulation:
         self.real_time = 0      # Keep track of the real time
         self.dt = 1/60          # Simulation time step
         self.num_vehicles = 0
+        self.total_vehicles = 0
+        self.dropped = 0
         self.roads = []         # Array to store roads
         self.generators = []
         self.traffic_signals = []
@@ -82,7 +84,7 @@ class Simulation:
         # Increment time
         self.t += self.dt
         self.frame_count += 1
-        if self.frame_count % 42 ==0:
+        if self.frame_count % 41 ==0:
             self.real_time += 1
         self.vehicle_dist.append(self.num_vehicles)
 

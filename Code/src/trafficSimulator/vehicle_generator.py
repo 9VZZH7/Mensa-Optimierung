@@ -32,7 +32,7 @@ class VehicleGenerator:
             t = np.array([0, 0, 0, 0, 45, 70, 80, 100, 115, 155, 155, 155, 155] )
             c = [96, 197.66604206, -87.57521343, 145.25315264, -30.11543723, 180.5093985, -124.12274568, 265.26061658, 3, 0, 0, 0, 0] 
             k = 3
-            return ip.BSpline(t,c,k)(time/60)
+            return (ip.BSpline(t,c,k)(time/60) / 100 ) * 16.4
         else: 
             return self.vehicle_rate
 
@@ -68,7 +68,10 @@ class VehicleGenerator:
                 self.upcoming_vehicle.time_added = self.sim.t
                 road.vehicles.append(self.upcoming_vehicle)
                 self.sim.num_vehicles += 1
+                self.sim.total_vehicles += 1
                 # Reset last_added_time and upcoming_vehicle
                 self.last_added_time = self.sim.t
+            elif not road.vehicles[-1].x > self.upcoming_vehicle.s0 + self.upcoming_vehicle.l: 
+                self.sim.dropped += 1
             self.upcoming_vehicle = self.generate_vehicle(self.sim.real_time)
 
