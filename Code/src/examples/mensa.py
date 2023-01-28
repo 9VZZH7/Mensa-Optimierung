@@ -131,5 +131,5 @@ sim.create_gen({
 # Start simulation
 win = Window(sim)
 win.zoom = 4
-win.run(steps_per_update=5)
+win.run(steps_per_update=100)
 print(sim.waiting_times[0])

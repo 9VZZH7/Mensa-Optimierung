@@ -15,6 +15,7 @@ class Simulation:
     def set_default_config(self):
         self.t = 0.0            # Time keeping
         self.frame_count = 0    # Frame count keeping
+        self.real_time = 0      # Keep track of the real time
         self.dt = 1/60          # Simulation time step
         self.num_vehicles = 0
         self.roads = []         # Array to store roads
@@ -75,12 +76,14 @@ class Simulation:
                     self.roads[next_road_index].vehicles.append(new_vehicle)
                 else:
                     self.num_vehicles -= 1
-                    self.waiting_times.append(self.frame_count - vehicle.die())
+                    self.waiting_times.append(self.real_time - vehicle.die())
                 # In all cases, remove it from its road
                 road.vehicles.popleft()
         # Increment time
         self.t += self.dt
         self.frame_count += 1
+        if self.frame_count % 42 ==0:
+            self.real_time += 1
         self.vehicle_dist.append(self.num_vehicles)
 
 
