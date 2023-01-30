@@ -2,7 +2,7 @@ from scipy.spatial import distance
 from collections import deque
 
 class Road:
-    def __init__(self, start, end, merging, sim):
+    def __init__(self, start, end, merging, sim, speed_lim = float('Inf')):
         self.start = start
         self.end = end
         self.sim = sim
@@ -10,6 +10,7 @@ class Road:
         self.is_merging = merging
         self.merging_queue = deque()
         self.removed_queue = deque()
+        self.speed_lim = speed_lim
 
         self.vehicles = deque()
 

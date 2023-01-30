@@ -26,8 +26,8 @@ class Simulation:
         self.vehicle_dist = []
         self.waiting_times = []
 
-    def create_road(self, start, end, merging = False):
-        road = Road(start, end, merging, self)
+    def create_road(self, start, end, merging = False, speed_lim = float('inf')):
+        road = Road(start, end, merging, self, speed_lim = speed_lim)
         self.roads.append(road)
         return road
 
@@ -76,6 +76,10 @@ class Simulation:
                     # Add it to the next road
                     next_road_index = vehicle.path[vehicle.current_road_index]
                     self.roads[next_road_index].vehicles.append(new_vehicle)
+                    if self.roads[next_road_index].speed_lim != float('inf'):
+                        new_vehicle._v_max = min(new_vehicle._v_max,self.roads[next_road_index].speed_lim)
+                    else:
+                        new_vehicle._v_max = 16.6
                 else:
                     self.num_vehicles -= 1
                     self.waiting_times.append(self.real_time - vehicle.die())

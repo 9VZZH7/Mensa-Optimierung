@@ -73,9 +73,11 @@ class Vehicle:
         self.stopped = False
 
     def slow(self, v):
+        self.slowed = True
         self.v_max = v
 
     def unslow(self):
+        self.slowed = False
         self.v_max = self._v_max
         
     def die(self):
