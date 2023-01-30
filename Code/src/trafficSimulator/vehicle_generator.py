@@ -48,6 +48,8 @@ class VehicleGenerator:
             total = sum(pair[0](time) for pair in self.vehicles)
         else:
             assert False
+        if total == 0:
+            return None
         r = randint(1, total+1)
         for (weight, config) in self.vehicles:
             if self.vehicle_weight == 'const':
@@ -59,6 +61,9 @@ class VehicleGenerator:
 
     def update(self):
         """Add vehicles"""
+        if self.upcoming_vehicle is None:
+            self.upcoming_vehicle = self.generate_vehicle(self.sim.real_time)
+            return
         if self.sim.t - self.last_added_time >= 60 / self.variable_vehicle_rate(self.sim.real_time):
             # If time elasped after last added vehicle is
             # greater than vehicle_period; generate a vehicle

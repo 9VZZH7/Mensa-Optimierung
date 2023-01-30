@@ -142,7 +142,7 @@ def run(v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spaw
     
     win = Window(sim)
     win.zoom = 4
-    win.run(steps_per_update=100)
+    win.run(steps_per_update=1000)
     return sim
 
 if __name__ == "__main__":

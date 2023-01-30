@@ -4,7 +4,10 @@ from matplotlib import pyplot as plt
 from trafficSimulator import *
 from examples import mensa
 
-sim = mensa.run()
-print(sim.total_vehicles)
-print(sim.waiting_times[0])
-print(np.average(sim.waiting_times))
+def test_east_west():
+    eva = []
+    for _, eastwest in enumerate((0,25,50,74,100)):
+        weights = spawning(eastwest / 100, 0.5, 0.5)
+        sim = mensa.run(weights = weights)
+        eva.append(sim)
+    return eva
