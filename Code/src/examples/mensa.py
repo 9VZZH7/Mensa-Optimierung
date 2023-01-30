@@ -108,7 +108,12 @@ def run(v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spaw
         *RACK_TO_INTERSECT_EAST,
         *THREE_TO_INTERSECT_EAST
     ])
-    
+
+    sim.create_signal([[3, 5, 14, 16, 22+n-1, 22+4*n-1]])
+    # sim.create_signal([[5]])
+    # sim.create_signal([[14]])
+    # sim.create_signal([[16]])
+
     def road(a): return range(a, a+n)
     
     sim.create_gen({
