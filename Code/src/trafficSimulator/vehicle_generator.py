@@ -29,15 +29,16 @@ class VehicleGenerator:
     def variable_vehicle_rate(self,time):
         if self.vehicle_rate == 'variable': 
             if(time>=9300): return 0.01
-            t = np.array([0, 0, 0, 0, 45, 70, 80, 100, 115, 155, 155, 155, 155] )
-            c = [96, 197.66604206, -87.57521343, 145.25315264, -30.11543723, 180.5093985, -124.12274568, 265.26061658, 3, 0, 0, 0, 0] 
-            k = 3
-            return (ip.BSpline(t,c,k)(time/60) / 100 ) * 16.4
+            return self.spline(time/60) * 0.27
         else: 
             return self.vehicle_rate
 
     def init_properties(self):
         self.upcoming_vehicle = self.generate_vehicle(0)
+        t = np.array([0, 0, 0, 0, 45, 70, 80, 100, 115, 155, 155, 155, 155] )
+        c = [96, 197.66604206, -87.57521343, 145.25315264, -30.11543723, 180.5093985, -124.12274568, 265.26061658, 3, 0, 0, 0, 0] 
+        k = 3
+        self.spline = ip.BSpline(t,c,k)
 
     def generate_vehicle(self, time):
         """Returns a random vehicle from self.vehicles with random proportions"""

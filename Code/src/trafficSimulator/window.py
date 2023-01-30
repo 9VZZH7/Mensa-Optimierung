@@ -308,11 +308,11 @@ class Window:
     def draw_status(self):
         hours = 11 + int((self.sim.real_time / 60 + 30) / 60)
         mins = int((self.sim.real_time) // 60 + 30) % 60
-        sec = int((self.sim.real_time) % 60) 
+        #sec = int((self.sim.real_time) % 60) 
         if mins < 10:
-            text_fps = self.text_font.render(f'Uhrzeit = {hours}:0{mins}:{sec}', False, (0, 0, 0))
+            text_fps = self.text_font.render(f'Uhrzeit = {hours}:0{mins}', False, (0, 0, 0))
         else: 
-            text_fps = self.text_font.render(f'Uhrzeit = {hours}:{mins}:{sec}', False, (0, 0, 0))
+            text_fps = self.text_font.render(f'Uhrzeit = {hours}:{mins}', False, (0, 0, 0))
         text_vhc = self.text_font.render(f'Studenten = {self.sim.num_vehicles}', False, (0, 0, 0))
         
         self.screen.blit(text_fps, (0, 0))
