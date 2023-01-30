@@ -48,7 +48,7 @@ def run(v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spaw
     
     # Roads
     STAIRS_TO_EDGE_WEST = (STAIRS_WEST, EDGE_WEST)
-    STAIRS_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST, False, 10)
+    EDGE_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST, False, 10)
     RACK_TO_ONE_WEST = curve_road(TRAY_RACK_WEST, FOOD_ONE_WEST, (TRAY_RACK_WEST[0], FOOD_ONE_WEST[1]), resolution=n)
     RACK_TO_INTERSECT_WEST = curve_road(TRAY_RACK_WEST, FIRST_INTERSECTION_WEST, (TRAY_RACK_WEST[0], FIRST_INTERSECTION_WEST[1]), resolution=n)
     ONE_TO_INTERSECT_WEST = (FOOD_ONE_WEST, FIRST_INTERSECTION_WEST)
@@ -63,7 +63,7 @@ def run(v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spaw
     CROSS_INTERSECT_TO_ALL_EAST = (CROSS_INTERSECTION, THIRD_INTERSECTION_EAST)
     
     STAIRS_TO_EDGE_EAST = (STAIRS_EAST, EDGE_EAST)
-    STAIRS_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST, False, 10)
+    EDGE_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST, False, 10)
     RACK_TO_ONE_EAST = curve_road(TRAY_RACK_EAST, FOOD_ONE_EAST, (TRAY_RACK_EAST[0], FOOD_ONE_EAST[1]), resolution=n)
     RACK_TO_INTERSECT_EAST = curve_road(TRAY_RACK_EAST, FIRST_INTERSECTION_EAST, (TRAY_RACK_EAST[0], FIRST_INTERSECTION_EAST[1]), resolution=n)
     ONE_TO_INTERSECT_EAST = (FOOD_ONE_EAST, FIRST_INTERSECTION_EAST)
@@ -80,7 +80,7 @@ def run(v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spaw
     
     sim.create_roads([
         STAIRS_TO_EDGE_WEST,
-        STAIRS_TO_RACK_WEST,
+        EDGE_TO_RACK_WEST,
         ONE_TO_INTERSECT_WEST,
         INTERSECT_TO_TWO_WEST,
         FIRST_INTERSECT_TO_INTERSECT_WEST,
@@ -91,7 +91,7 @@ def run(v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spaw
         THREE_WEST_TO_CROSS_INTERSECT,
         CROSS_INTERSECT_TO_ALL_EAST,
         STAIRS_TO_EDGE_EAST,
-        STAIRS_TO_RACK_EAST,
+        EDGE_TO_RACK_EAST,
         ONE_TO_INTERSECT_EAST,
         INTERSECT_TO_TWO_EAST,
         FIRST_INTERSECT_TO_INTERSECT_EAST,
@@ -133,3 +133,6 @@ def run(v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spaw
     win.zoom = 4
     win.run(steps_per_update=100)
     return sim
+
+if __name__ == "__main__":
+    run()
