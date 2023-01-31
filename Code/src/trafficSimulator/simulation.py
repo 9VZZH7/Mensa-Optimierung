@@ -94,5 +94,9 @@ class Simulation:
 
 
     def run(self, steps):
-        for _ in range(steps):
-            self.update()
+        if steps == 'whole':
+            while self.real_time < 10200:
+                self.update()
+        else:
+            for _ in range(steps):
+                self.update()
