@@ -13,7 +13,7 @@ class Window:
         # Update configurations
         for attr, val in config.items():
             setattr(self, attr, val)
-        
+
     def set_default_config(self):
         """Set default configuration"""
         self.width = 1400
@@ -321,6 +321,12 @@ class Window:
         self.screen.blit(text_fps, (0, 0))
         self.screen.blit(text_vhc, (0, 15))
 
+    def draw_counters(self):
+        self.box((625, 650), (150, 30), (150, 150, 150))
+        self.box((625, 400), (150, 150), (150, 150, 150))
+        # self.rotated_box((400, 650), (150, 30), angle=45, color=(150, 150, 150))
+        pygame.draw.polygon(self.screen, (150, 150, 150), [(542, 667), (562, 689), (466, 748), (446, 726)])
+        pygame.draw.polygon(self.screen, (150, 150, 150), [(858, 667), (838, 689), (934, 748), (954, 726)])
 
     def draw(self):
         # Fill background
@@ -331,6 +337,7 @@ class Window:
         # self.draw_grid(100, (200,200,200))
         # self.draw_axes()
 
+        self.draw_counters()
         self.draw_roads()
         self.draw_vehicles()
         self.draw_signals()
