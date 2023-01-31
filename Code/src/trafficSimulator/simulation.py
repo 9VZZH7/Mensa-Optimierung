@@ -76,10 +76,14 @@ class Simulation:
                     # Add it to the next road
                     next_road_index = vehicle.path[vehicle.current_road_index]
                     self.roads[next_road_index].vehicles.append(new_vehicle)
+                    # Check if next road has speed limit
                     if self.roads[next_road_index].speed_lim != float('inf'):
                         new_vehicle._v_max = min(new_vehicle._v_max,self.roads[next_road_index].speed_lim)
                     else:
                         new_vehicle._v_max = 16.6
+                    # Check for traffic lights
+                    if self.roads[next_road_index].has_traffic_signal:
+                        self.roads[next_road_index].traffic_signal.increment()
                 else:
                     self.num_vehicles -= 1
                     self.waiting_times.append(self.real_time - vehicle.die())

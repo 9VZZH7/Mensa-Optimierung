@@ -9,7 +9,7 @@ def test_east_west():
     eva = []
     for _, eastwest in enumerate((0,25,50,74,100)):
         weights = spawning(eastwest / 100, 0.5, 0.5)
-        sim = mensa.run(weights = weights)
+        sim = mensa.run(weights = weights,steps='whole')
         eva.append(sim)
     return eva
 

@@ -10,7 +10,7 @@ sys.path.insert(0, parentdir)
 
 from trafficSimulator import *
 
-def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spawning(ostwest = 0.5,essen3 = 0.5,essen4 = 0.5)):
+def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spawning(ostwest = 0.5,essen3 = 0.5,essen4 = 0.5), fixed_cycle = True):
     sim = Simulation()
     
     n = 15
@@ -115,7 +115,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         *THREE_TO_INTERSECT_EAST
     ])
 
-    sim.create_signal([[4, 6, 16, 18, 24+n-1, 24+4*n-1]])
+    sim.create_signal([[4, 6, 16, 18, 24+n-1, 24+4*n-1]], config = {'fixed_cycle': fixed_cycle})
     # sim.create_signal([[5]])
     # sim.create_signal([[14]])
     # sim.create_signal([[16]])

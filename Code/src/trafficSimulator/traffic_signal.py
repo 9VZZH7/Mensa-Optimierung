@@ -19,6 +19,8 @@ class TrafficSignal:
         self.current_cycle_index = 0
 
         self.last_t = 0
+        self.passed_cars = 0
+        self.fixed_cycle = True
 
     def init_properties(self):
         for i in range(len(self.roads)):
@@ -30,6 +32,17 @@ class TrafficSignal:
         return self.cycle[self.current_cycle_index]
     
     def update(self, sim):
-        cycle_length = 30
-        k = (sim.t // cycle_length) % 2
-        self.current_cycle_index = int(k)
+        if self.fixed_cycle:
+            cycle_length = 30
+            k = (sim.t // cycle_length) % 2
+            self.current_cycle_index = int(k)
+        else:
+            self.passed_cars = max(0, self.passed_cars - 1)
+            if self.passed_cars > 0:
+                self.current_cycle_index = 0
+            else:
+                self.current_cycle_index = 1
+            
+        
+    def increment(self):
+        self.passed_cars += 3
