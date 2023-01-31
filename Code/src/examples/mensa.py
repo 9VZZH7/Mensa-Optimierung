@@ -139,10 +139,12 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     })
     
     # Start simulation
-    
-    win = Window(sim)
-    win.zoom = 4
-    win.run(steps_per_update=steps)
+    if steps == 'whole':
+        sim.run('whole')
+    else:
+        win = Window(sim)
+        win.zoom = 4
+        win.run(steps_per_update=steps)
     return sim
 
 if __name__ == "__main__":

@@ -45,4 +45,4 @@ class TrafficSignal:
             
         
     def increment(self):
-        self.passed_cars += 3
+        self.passed_cars += 41
