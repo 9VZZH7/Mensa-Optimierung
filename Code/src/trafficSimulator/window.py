@@ -42,6 +42,9 @@ class Window:
         pygame.font.init()
         self.text_font = pygame.font.SysFont('Lucida Console', 16)
 
+        # Hier kann gezeicnet werden
+        self.box((0, 52.5), (28, 3.5), (125, 125, 125))
+
         # Draw loop
         running = True
         while running:

@@ -121,7 +121,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         *THREE_TO_INTERSECT_EAST
     ])
 
-    sim.create_signal([[3]])
+    sim.create_signal([[3]],config={'fixed_cycle':False})
     sim.create_signal([[5]])
     sim.create_signal([[7]])
     sim.create_signal([[16]])
@@ -152,10 +152,10 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         sim.run('whole')
     else:
         win = Window(sim)
-        win.box((0, 52.5), (28, 3.5), (125, 125, 125))
+        # win.box((0, 52.5), (28, 3.5), (125, 125, 125))
         win.zoom = 4
-        win.run(steps_per_update=100)
+        win.run(steps_per_update=steps)
     return sim
 
 if __name__ == "__main__":
-    run()
+    run(steps = 10, fixed_cycle=False)
