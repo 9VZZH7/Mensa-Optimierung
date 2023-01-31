@@ -16,44 +16,47 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     n = 15
     
     # Nodes
-    STAIRS_WEST = (-98, 42)
-    EDGE_WEST = (-98, 105)
-    TRAY_RACK_WEST = (-86, 105)
-    DIVERSION_WEST = (-86, 84)
+    STAIRS_WEST = (-84, 42)
+    EDGE_WEST = (-84, 105)
+    TRAY_RACK_WEST = (-70, 105)
+    DIVERSION_WEST = (-70, 84)
+    CURVE_END_WEST = (-63, 63)
     
-    FOOD_ONE_WEST = (-70, 63)
-    FOOD_TWO_WEST = (-56, 56)
-    FOOD_THREE_WEST = (-28, 49)
+    FOOD_ONE_WEST = (-56, 63)
+    FOOD_TWO_WEST = (-42, 56)
+    FOOD_THREE_WEST = (-14, 49)
     
-    FIRST_INTERSECTION_WEST = (-70, 56)
-    SECOND_INTERSECTION_WEST = (-66.5, 49)
-    THIRD_INTERSECTION_WEST = (-49, 21)
+    FIRST_INTERSECTION_WEST = (-52.5, 56)
+    SECOND_INTERSECTION_WEST = (-49, 49)
+    THIRD_INTERSECTION_WEST = (-35, 21)
     
-    END_WEST = (-49, 0)
+    END_WEST = (-35, 0)
     
-    STAIRS_EAST = (98, 42)
-    EDGE_EAST = (98, 105)
-    TRAY_RACK_EAST = (86, 105)
-    DIVERSION_EAST = (86, 84)
+    STAIRS_EAST = (84, 42)
+    EDGE_EAST = (84, 105)
+    TRAY_RACK_EAST = (70, 105)
+    DIVERSION_EAST = (70, 84)
+    CURVE_END_EAST = (63, 63)
     
-    FOOD_ONE_EAST = (70, 63)
-    FOOD_TWO_EAST = (56, 56)
-    FOOD_THREE_EAST = (28, 49)
+    FOOD_ONE_EAST = (56, 63)
+    FOOD_TWO_EAST = (42, 56)
+    FOOD_THREE_EAST = (14, 49)
     
-    FIRST_INTERSECTION_EAST = (70, 56)
-    SECOND_INTERSECTION_EAST = (66.5, 49)
-    THIRD_INTERSECTION_EAST = (49, 21)
+    FIRST_INTERSECTION_EAST = (52.5, 56)
+    SECOND_INTERSECTION_EAST = (49, 49)
+    THIRD_INTERSECTION_EAST = (35, 21)
     
-    END_EAST = (49, 0)
+    END_EAST = (35, 0)
     
-    CROSS_INTERSECTION = (0, 38.5)
+    CROSS_INTERSECTION = (0, 41)
     
     # Roads
     STAIRS_TO_EDGE_WEST = (STAIRS_WEST, EDGE_WEST)
     EDGE_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST, False, 10)
     RACK_TO_DIVERSION_WEST = (TRAY_RACK_WEST, DIVERSION_WEST)
-    DIVERSION_TO_ONE_WEST = curve_road(DIVERSION_WEST, FOOD_ONE_WEST, (TRAY_RACK_WEST[0], FOOD_ONE_WEST[1]), resolution=n)
-    DIVERSION_TO_INTERSECT_WEST = curve_road(DIVERSION_WEST, FIRST_INTERSECTION_WEST, (TRAY_RACK_WEST[0], FIRST_INTERSECTION_WEST[1]), resolution=n)
+    DIVERSION_TO_CURVE_END_WEST = curve_road(DIVERSION_WEST, CURVE_END_WEST, (DIVERSION_WEST[0], CURVE_END_WEST[1]), resolution=n)
+    CURVE_END_TO_ONE_WEST = (CURVE_END_WEST, FOOD_ONE_WEST)
+    DIVERSION_TO_INTERSECT_WEST = curve_road(CURVE_END_WEST, FIRST_INTERSECTION_WEST, (DIVERSION_WEST[0], CURVE_END_WEST[1]), resolution=n)
     ONE_TO_INTERSECT_WEST = (FOOD_ONE_WEST, FIRST_INTERSECTION_WEST)
     INTERSECT_TO_TWO_WEST = (FIRST_INTERSECTION_WEST, FOOD_TWO_WEST)
     FIRST_INTERSECT_TO_INTERSECT_WEST = (FIRST_INTERSECTION_WEST, SECOND_INTERSECTION_WEST, True)
@@ -68,8 +71,9 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     STAIRS_TO_EDGE_EAST = (STAIRS_EAST, EDGE_EAST)
     EDGE_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST, False, 10)
     RACK_TO_DIVERSION_EAST = (TRAY_RACK_EAST, DIVERSION_EAST)
-    DIVERSION_TO_ONE_EAST = curve_road(DIVERSION_EAST, FOOD_ONE_EAST, (TRAY_RACK_EAST[0], FOOD_ONE_EAST[1]), resolution=n)
-    DIVERSION_TO_INTERSECT_EAST = curve_road(DIVERSION_EAST, FIRST_INTERSECTION_EAST, (TRAY_RACK_EAST[0], FIRST_INTERSECTION_EAST[1]), resolution=n)
+    DIVERSION_TO_CURVE_END_EAST = curve_road(DIVERSION_EAST, CURVE_END_EAST, (DIVERSION_EAST[0], CURVE_END_EAST[1]), resolution=n)
+    CURVE_END_TO_ONE_EAST = (CURVE_END_EAST, FOOD_ONE_EAST)
+    DIVERSION_TO_INTERSECT_EAST = curve_road(CURVE_END_EAST, FIRST_INTERSECTION_EAST, (DIVERSION_EAST[0], CURVE_END_EAST[1]), resolution=n)
     ONE_TO_INTERSECT_EAST = (FOOD_ONE_EAST, FIRST_INTERSECTION_EAST)
     INTERSECT_TO_TWO_EAST = (FIRST_INTERSECTION_EAST, FOOD_TWO_EAST)
     FIRST_INTERSECT_TO_INTERSECT_EAST = (FIRST_INTERSECTION_EAST, SECOND_INTERSECTION_EAST, True)
@@ -86,6 +90,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         STAIRS_TO_EDGE_WEST,
         EDGE_TO_RACK_WEST,
         RACK_TO_DIVERSION_WEST,
+        CURVE_END_TO_ONE_WEST,
         ONE_TO_INTERSECT_WEST,
         INTERSECT_TO_TWO_WEST,
         FIRST_INTERSECT_TO_INTERSECT_WEST,
@@ -98,6 +103,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         STAIRS_TO_EDGE_EAST,
         EDGE_TO_RACK_EAST,
         RACK_TO_DIVERSION_EAST,
+        CURVE_END_TO_ONE_EAST,
         ONE_TO_INTERSECT_EAST,
         INTERSECT_TO_TWO_EAST,
         FIRST_INTERSECT_TO_INTERSECT_EAST,
@@ -107,18 +113,21 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         INTERSECT_TO_END_EAST,
         THREE_EAST_TO_CROSS_INTERSECT,
         CROSS_INTERSECT_TO_ALL_WEST,
-        *DIVERSION_TO_ONE_WEST,
+        *DIVERSION_TO_CURVE_END_WEST,
         *DIVERSION_TO_INTERSECT_WEST,
         *THREE_TO_INTERSECT_WEST,
-        *DIVERSION_TO_ONE_EAST,
+        *DIVERSION_TO_CURVE_END_EAST,
         *DIVERSION_TO_INTERSECT_EAST,
         *THREE_TO_INTERSECT_EAST
     ])
 
-    sim.create_signal([[4, 6, 16, 18, 24+n-1, 24+4*n-1]], config = {'fixed_cycle': fixed_cycle})
-    # sim.create_signal([[5]])
-    # sim.create_signal([[14]])
-    # sim.create_signal([[16]])
+    sim.create_signal([[3]])
+    sim.create_signal([[5]])
+    sim.create_signal([[7]])
+    sim.create_signal([[16]])
+    sim.create_signal([[18]])
+    sim.create_signal([[20]])
+
 
     def road(a): return range(a, a+n)
     
@@ -127,14 +136,14 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         'vehicle_weight': v_weight, # can be set to variable. Weight needs to be callable
         'v_max': v_max,
         'vehicles': [
-            [weights.essen_1, {'path': [0, 1, 2, *road(24), 3, 5, 8, 9]}],
-            [weights.essen_2, {'path': [0, 1, 2, *road(24+n), 4, 7, 8, 9]}],
-            [weights.essen_3_west, {'path': [0, 1, 2, *road(24+n), 5, 6, *road(24+2*n), 9]}],
-            [weights.essen_3_ost, {'path': [0, 1, 2, *road(24+n), 5, 6, 10, 11, 20]}],
-            [weights.essen_6, {'path': [12, 13, 14, *road(24+3*n), 15, 17, 20, 21]}],
-            [weights.essen_5, {'path': [12, 13, 14, *road(24+4*n), 16, 19, 20, 21]}],
-            [weights.essen_4_ost, {'path': [12, 13, 14, *road(24+4*n), 17, 18, *road(24+5*n), 21]}],
-            [weights.essen_4_west, {'path': [12, 13, 14, *road(24+4*n), 17, 18, 22, 23, 9]}],
+            [weights.essen_1, {'path': [0, 1, 2, *road(26), 3, 4, 6, 9, 10]}],
+            [weights.essen_2, {'path': [0, 1, 2, *road(26+n), 3, 5, 8, 9, 10]}],
+            [weights.essen_3_west, {'path': [0, 1, 2, *road(26+n), 6, 7, *road(26+2*n), 10]}],
+            [weights.essen_3_ost, {'path': [0, 1, 2, *road(26+n), 5, 7, 11, 12, 22]}],
+            [weights.essen_6, {'path': [13, 14, 15, *road(26+3*n), 16, 17, 19, 22, 23]}],
+            [weights.essen_5, {'path': [13, 14, 15, *road(26+4*n), 16, 18, 21, 22, 23]}],
+            [weights.essen_4_ost, {'path': [13, 14, 15, *road(26+4*n), 19, 20, *road(26+5*n), 23]}],
+            [weights.essen_4_west, {'path': [13, 14, 15, *road(26+4*n), 19, 20, 24, 25, 10]}],
         ]
     })
     
@@ -143,8 +152,9 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         sim.run('whole')
     else:
         win = Window(sim)
+        win.box((0, 52.5), (28, 3.5), (125, 125, 125))
         win.zoom = 4
-        win.run(steps_per_update=steps)
+        win.run(steps_per_update=100)
     return sim
 
 if __name__ == "__main__":
