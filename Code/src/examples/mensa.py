@@ -10,7 +10,7 @@ sys.path.insert(0, parentdir)
 
 from trafficSimulator import *
 
-def run(v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spawning(ostwest = 0.5,essen3 = 0.5,essen4 = 0.5)):
+def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spawning(ostwest = 0.5,essen3 = 0.5,essen4 = 0.5)):
     sim = Simulation()
     
     n = 15
@@ -142,7 +142,7 @@ def run(v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spaw
     
     win = Window(sim)
     win.zoom = 4
-    win.run(steps_per_update=1000)
+    win.run(steps_per_update=steps)
     return sim
 
 if __name__ == "__main__":
