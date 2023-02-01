@@ -323,7 +323,8 @@ class Window:
 
     def draw_counters(self):
         self.box((625, 650), (150, 30), (150, 150, 150))
-        self.box((625, 400), (150, 150), (150, 150, 150))
+        self.box((625, 420), (150, 150), (150, 150, 150))
+        self.box((625, 220), (150, 150), (150, 150, 150)) # activate only in mensa_with_checkouts.py
         # self.rotated_box((400, 650), (150, 30), angle=45, color=(150, 150, 150))
         pygame.draw.polygon(self.screen, (150, 150, 150), [(542, 667), (562, 689), (466, 748), (446, 726)])
         pygame.draw.polygon(self.screen, (150, 150, 150), [(858, 667), (838, 689), (934, 748), (954, 726)])
