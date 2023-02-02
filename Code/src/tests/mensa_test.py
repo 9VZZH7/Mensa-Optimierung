@@ -24,3 +24,17 @@ def plot_fun_and_stuff():
     sim = mensa.run(weights = spawning(0.72, 0.5, 0.5))
     plt.plot(sim.vehicle_dist)
 
+
+def var_speed_and_dist(N_speed, N_dist):
+    eva = np.zeros((N_speed,N_dist + 1))
+    speeds = np.arange(10, 20, 10/N_speed)
+    dists = np.arange(0,1 + 1/N_dist, 1/N_dist)
+    for i, speed in enumerate(speeds):
+        for j, dist in enumerate(dists):
+            w = spawning(dist, 0.5, 0.5)
+            eva[i,j] = np.average(mensa.run(weights = w, steps = 'whole', fixed_cycle = False, v_max = speed).waiting_times)
+    x, y = np.meshgrid(speeds, dists)
+    fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+    ax.plot_surface(x, y, eva, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+    plt.show()
+    return eva
