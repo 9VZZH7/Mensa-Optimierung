@@ -1,5 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
+from matplotlib import cm
 
 from trafficSimulator import *
 from examples import mensa
@@ -33,8 +34,10 @@ def var_speed_and_dist(N_speed, N_dist):
         for j, dist in enumerate(dists):
             w = spawning(dist, 0.5, 0.5)
             eva[i,j] = np.average(mensa.run(weights = w, steps = 'whole', fixed_cycle = False, v_max = speed).waiting_times)
-    x, y = np.meshgrid(speeds, dists)
+    y, x = np.meshgrid(speeds, dists)
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
     ax.plot_surface(x, y, eva, cmap=cm.coolwarm, linewidth=0, antialiased=False)
     plt.show()
     return eva
+
+

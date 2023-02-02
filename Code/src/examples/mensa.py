@@ -10,7 +10,7 @@ sys.path.insert(0, parentdir)
 
 from trafficSimulator import *
 
-def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spawning(ostwest = 0.5,essen3 = 0.5,essen4 = 0.5), fixed_cycle = True):
+def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spawning(ostwest = 0.5,essen3 = 0.5,essen4 = 0.5), fixed_cycle = True, speed_lim = 10):
     sim = Simulation()
     
     n = 15
@@ -52,7 +52,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     
     # Roads
     STAIRS_TO_EDGE_WEST = (STAIRS_WEST, EDGE_WEST)
-    EDGE_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST, False, 10)
+    EDGE_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST, False, speed_lim)
     RACK_TO_DIVERSION_WEST = (TRAY_RACK_WEST, DIVERSION_WEST)
     DIVERSION_TO_CURVE_END_WEST = curve_road(DIVERSION_WEST, CURVE_END_WEST, (DIVERSION_WEST[0], CURVE_END_WEST[1]), resolution=n)
     CURVE_END_TO_ONE_WEST = (CURVE_END_WEST, FOOD_ONE_WEST)
@@ -69,7 +69,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     CROSS_INTERSECT_TO_ALL_EAST = (CROSS_INTERSECTION, THIRD_INTERSECTION_EAST)
     
     STAIRS_TO_EDGE_EAST = (STAIRS_EAST, EDGE_EAST)
-    EDGE_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST, False, 10)
+    EDGE_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST, False, speed_lim)
     RACK_TO_DIVERSION_EAST = (TRAY_RACK_EAST, DIVERSION_EAST)
     DIVERSION_TO_CURVE_END_EAST = curve_road(DIVERSION_EAST, CURVE_END_EAST, (DIVERSION_EAST[0], CURVE_END_EAST[1]), resolution=n)
     CURVE_END_TO_ONE_EAST = (CURVE_END_EAST, FOOD_ONE_EAST)
