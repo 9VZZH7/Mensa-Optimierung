@@ -87,6 +87,7 @@ class Window:
                 elif event.type == pygame.MOUSEBUTTONUP:
                     self.mouse_down = False 
             if self.sim.real_time >= 10200:
+                self.sim.evaluate()
                 running = False
 
     def run(self, steps_per_update=1):

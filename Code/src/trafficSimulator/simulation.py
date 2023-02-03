@@ -2,6 +2,7 @@ from .road import Road
 from copy import deepcopy
 from .vehicle_generator import VehicleGenerator
 from .traffic_signal import TrafficSignal
+import numpy as np
 
 class Simulation:
     def __init__(self, config={}):
@@ -101,6 +102,11 @@ class Simulation:
         if steps == 'whole':
             while self.real_time < 10200:
                 self.update()
+            self.evaluate()
         else:
             for _ in range(steps):
                 self.update()
+                
+    def evaluate(self):
+        self.norm = np.linalg.norm(self.waiting_times - np.min(self.waiting_times)) / len(self.waiting_times)
+                

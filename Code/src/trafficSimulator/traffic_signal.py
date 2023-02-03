@@ -21,7 +21,7 @@ class TrafficSignal:
         self.last_t = 0
         self.passed_cars = 0
         self.fixed_cycle = True
-        self.cycle_delay = 200
+        self.cycle_delay = 150
         self.delay = 0
 
     def init_properties(self):
@@ -49,5 +49,5 @@ class TrafficSignal:
     def increment(self):
         self.passed_cars += 1
         self.delay += self.cycle_delay
-        if self.passed_cars % 5 == 0:
-            self.delay += 500
+        if self.passed_cars % 6 == 0:
+            self.delay += 300
