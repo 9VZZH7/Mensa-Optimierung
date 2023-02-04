@@ -23,8 +23,8 @@ class Road:
         # self.angle = np.arctan2(self.end[1]-self.start[1], self.end[0]-self.start[0])
         self.has_traffic_signal = False
         self.intersection_slow_factor = 0.4
-        self.intersection_stop_distance = 7
-        self.intersection_slow_distance = 25
+        self.intersection_stop_distance = 4
+        self.intersection_slow_distance = 12
 
     def set_traffic_signal(self, signal, group):
         self.traffic_signal = signal
