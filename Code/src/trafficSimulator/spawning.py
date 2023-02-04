@@ -3,7 +3,10 @@ import numpy as np
 class spawning():
     
     def __init__(self,ostwest,essen3,essen4):
-        assert 0 <= ostwest and ostwest <= 1
+        if not (0 <= ostwest):
+            ostwest = 0
+        if not (ostwest <= 1):
+            ostwest = 1
         self.ostwest = ostwest # np.array((ostwest,1-ostwest))
         self.essen3 = essen3
         self.essen4 = essen4
