@@ -53,7 +53,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     EDGE_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST, False, speed_lim)
     RACK_TO_DIVERSION_WEST = (TRAY_RACK_WEST, DIVERSION_WEST)
     # DIVERSION_TO_CURVE_END_WEST = (DIVERSION_WEST, CURVE_END_WEST)
-    CURVE_END_TO_ONE_WEST = (DIVERSION_WEST, FOOD_ONE_WEST)
+    DIVERSION_TO_ONE_WEST = (DIVERSION_WEST, FOOD_ONE_WEST)
     DIVERSION_TO_INTERSECT_WEST = (DIVERSION_WEST, FIRST_INTERSECTION_WEST)
     ONE_TO_INTERSECT_WEST = (FOOD_ONE_WEST, FIRST_INTERSECTION_WEST)
     INTERSECT_TO_TWO_WEST = (FIRST_INTERSECTION_WEST, FOOD_TWO_WEST)
@@ -70,7 +70,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     EDGE_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST, False, speed_lim)
     RACK_TO_DIVERSION_EAST = (TRAY_RACK_EAST, DIVERSION_EAST)
     # DIVERSION_TO_CURVE_END_EAST = (DIVERSION_EAST, CURVE_END_EAST)
-    CURVE_END_TO_ONE_EAST = (DIVERSION_EAST, FOOD_ONE_EAST)
+    DIVERSION_TO_ONE_EAST = (DIVERSION_EAST, FOOD_ONE_EAST)
     DIVERSION_TO_INTERSECT_EAST = (DIVERSION_EAST, FIRST_INTERSECTION_EAST)
     ONE_TO_INTERSECT_EAST = (FOOD_ONE_EAST, FIRST_INTERSECTION_EAST)
     INTERSECT_TO_TWO_EAST = (FIRST_INTERSECTION_EAST, FOOD_TWO_EAST)
@@ -88,7 +88,8 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         STAIRS_TO_EDGE_WEST,
         EDGE_TO_RACK_WEST,
         RACK_TO_DIVERSION_WEST,
-        CURVE_END_TO_ONE_WEST,
+        DIVERSION_TO_ONE_WEST,
+        DIVERSION_TO_INTERSECT_WEST,
         ONE_TO_INTERSECT_WEST,
         INTERSECT_TO_TWO_WEST,
         FIRST_INTERSECT_TO_INTERSECT_WEST,
@@ -101,7 +102,8 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         STAIRS_TO_EDGE_EAST,
         EDGE_TO_RACK_EAST,
         RACK_TO_DIVERSION_EAST,
-        CURVE_END_TO_ONE_EAST,
+        DIVERSION_TO_ONE_EAST,
+        DIVERSION_TO_INTERSECT_EAST,
         ONE_TO_INTERSECT_EAST,
         INTERSECT_TO_TWO_EAST,
         FIRST_INTERSECT_TO_INTERSECT_EAST,
@@ -111,18 +113,16 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         INTERSECT_TO_END_EAST,
         THREE_EAST_TO_CROSS_INTERSECT,
         CROSS_INTERSECT_TO_ALL_WEST,
-        DIVERSION_TO_INTERSECT_WEST,
-        DIVERSION_TO_INTERSECT_EAST,
         *THREE_TO_INTERSECT_WEST,
         *THREE_TO_INTERSECT_EAST
     ])
 
     sim.create_signal([[3]], config={'fixed_cycle':fixed_cycle})
-    sim.create_signal([[5]], config={'fixed_cycle':fixed_cycle})
-    sim.create_signal([[7]], config={'fixed_cycle':fixed_cycle})
-    sim.create_signal([[16]], config={'fixed_cycle':fixed_cycle})
-    sim.create_signal([[18]], config={'fixed_cycle':fixed_cycle})
+    sim.create_signal([[6]], config={'fixed_cycle':fixed_cycle})
+    sim.create_signal([[8]], config={'fixed_cycle':fixed_cycle})
+    sim.create_signal([[17]], config={'fixed_cycle':fixed_cycle})
     sim.create_signal([[20]], config={'fixed_cycle':fixed_cycle})
+    sim.create_signal([[22]], config={'fixed_cycle':fixed_cycle})
 
 
 
@@ -133,14 +133,14 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         'vehicle_weight': v_weight, # can be set to variable. Weight needs to be callable
         'v_max': v_max,
         'vehicles': [
-            [weights.essen_1, {'path': [0, 1, 2, 26, 3, 4, 6, 9, 10]}],
-            [weights.essen_2, {'path': [0, 1, 2, 26, 3, 5, 8, 9, 10]}],
-            [weights.essen_3_west, {'path': [0, 1, 2, 26, 6, 7, *road(28), 10]}],
-            [weights.essen_3_ost, {'path': [0, 1, 2, 26, 5, 7, 11, 12, 22]}],
-            [weights.essen_6, {'path': [13, 14, 15, 27, 16, 17, 19, 22, 23]}],
-            [weights.essen_5, {'path': [13, 14, 15, 27, 16, 18, 21, 22, 23]}],
-            [weights.essen_4_ost, {'path': [13, 14, 15, 27, 19, 20, *road(28+n), 23]}],
-            [weights.essen_4_west, {'path': [13, 14, 15, 27, 19, 20, 24, 25, 10]}],
+            [weights.essen_1, {'path': [0, 1, 2, 3, 5, 7, 10, 11]}],
+            [weights.essen_2, {'path': [0, 1, 2, 4, 6, 9, 10, 11]}],
+            [weights.essen_3_west, {'path': [0, 1, 2, 4, 7, 8, *road(28), 11]}],
+            [weights.essen_3_ost, {'path': [0, 1, 2, 4, 7, 8, 12, 13, 25]}],
+            [weights.essen_6, {'path': [14, 15, 16, 17, 19, 21, 24, 25]}],
+            [weights.essen_5, {'path': [14, 15, 16, 18, 20, 23, 24, 25]}],
+            [weights.essen_4_ost, {'path': [14, 15, 16, 18, 21, 22, *road(28+n), 25]}],
+            [weights.essen_4_west, {'path': [14, 15, 16, 18, 21, 22, 26, 27, 11]}]
         ]
     })
     
