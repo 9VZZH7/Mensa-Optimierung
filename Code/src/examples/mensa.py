@@ -19,8 +19,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     STAIRS_WEST = (-84, 42)
     EDGE_WEST = (-84, 105)
     TRAY_RACK_WEST = (-70, 105)
-    DIVERSION_WEST = (-70, 84)
-    CURVE_END_WEST = (-63, 63)
+    DIVERSION_WEST = (-70, 63)
     
     FOOD_ONE_WEST = (-56, 63)
     FOOD_TWO_WEST = (-42, 56)
@@ -35,8 +34,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     STAIRS_EAST = (84, 42)
     EDGE_EAST = (84, 105)
     TRAY_RACK_EAST = (70, 105)
-    DIVERSION_EAST = (70, 84)
-    CURVE_END_EAST = (63, 63)
+    DIVERSION_EAST = (70, 63)
     
     FOOD_ONE_EAST = (56, 63)
     FOOD_TWO_EAST = (42, 56)
@@ -54,9 +52,9 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     STAIRS_TO_EDGE_WEST = (STAIRS_WEST, EDGE_WEST)
     EDGE_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST, False, speed_lim)
     RACK_TO_DIVERSION_WEST = (TRAY_RACK_WEST, DIVERSION_WEST)
-    DIVERSION_TO_CURVE_END_WEST = curve_road(DIVERSION_WEST, CURVE_END_WEST, (DIVERSION_WEST[0], CURVE_END_WEST[1]), resolution=n)
-    CURVE_END_TO_ONE_WEST = (CURVE_END_WEST, FOOD_ONE_WEST)
-    DIVERSION_TO_INTERSECT_WEST = curve_road(CURVE_END_WEST, FIRST_INTERSECTION_WEST, (DIVERSION_WEST[0], CURVE_END_WEST[1]), resolution=n)
+    # DIVERSION_TO_CURVE_END_WEST = (DIVERSION_WEST, CURVE_END_WEST)
+    CURVE_END_TO_ONE_WEST = (DIVERSION_WEST, FOOD_ONE_WEST)
+    DIVERSION_TO_INTERSECT_WEST = (DIVERSION_WEST, FIRST_INTERSECTION_WEST)
     ONE_TO_INTERSECT_WEST = (FOOD_ONE_WEST, FIRST_INTERSECTION_WEST)
     INTERSECT_TO_TWO_WEST = (FIRST_INTERSECTION_WEST, FOOD_TWO_WEST)
     FIRST_INTERSECT_TO_INTERSECT_WEST = (FIRST_INTERSECTION_WEST, SECOND_INTERSECTION_WEST, True)
@@ -71,9 +69,9 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     STAIRS_TO_EDGE_EAST = (STAIRS_EAST, EDGE_EAST)
     EDGE_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST, False, speed_lim)
     RACK_TO_DIVERSION_EAST = (TRAY_RACK_EAST, DIVERSION_EAST)
-    DIVERSION_TO_CURVE_END_EAST = curve_road(DIVERSION_EAST, CURVE_END_EAST, (DIVERSION_EAST[0], CURVE_END_EAST[1]), resolution=n)
-    CURVE_END_TO_ONE_EAST = (CURVE_END_EAST, FOOD_ONE_EAST)
-    DIVERSION_TO_INTERSECT_EAST = curve_road(CURVE_END_EAST, FIRST_INTERSECTION_EAST, (DIVERSION_EAST[0], CURVE_END_EAST[1]), resolution=n)
+    # DIVERSION_TO_CURVE_END_EAST = (DIVERSION_EAST, CURVE_END_EAST)
+    CURVE_END_TO_ONE_EAST = (DIVERSION_EAST, FOOD_ONE_EAST)
+    DIVERSION_TO_INTERSECT_EAST = (DIVERSION_EAST, FIRST_INTERSECTION_EAST)
     ONE_TO_INTERSECT_EAST = (FOOD_ONE_EAST, FIRST_INTERSECTION_EAST)
     INTERSECT_TO_TWO_EAST = (FIRST_INTERSECTION_EAST, FOOD_TWO_EAST)
     FIRST_INTERSECT_TO_INTERSECT_EAST = (FIRST_INTERSECTION_EAST, SECOND_INTERSECTION_EAST, True)
@@ -113,11 +111,9 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         INTERSECT_TO_END_EAST,
         THREE_EAST_TO_CROSS_INTERSECT,
         CROSS_INTERSECT_TO_ALL_WEST,
-        *DIVERSION_TO_CURVE_END_WEST,
-        *DIVERSION_TO_INTERSECT_WEST,
+        DIVERSION_TO_INTERSECT_WEST,
+        DIVERSION_TO_INTERSECT_EAST,
         *THREE_TO_INTERSECT_WEST,
-        *DIVERSION_TO_CURVE_END_EAST,
-        *DIVERSION_TO_INTERSECT_EAST,
         *THREE_TO_INTERSECT_EAST
     ])
 
@@ -137,14 +133,14 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         'vehicle_weight': v_weight, # can be set to variable. Weight needs to be callable
         'v_max': v_max,
         'vehicles': [
-            [weights.essen_1, {'path': [0, 1, 2, *road(26), 3, 4, 6, 9, 10]}],
-            [weights.essen_2, {'path': [0, 1, 2, *road(26+n), 3, 5, 8, 9, 10]}],
-            [weights.essen_3_west, {'path': [0, 1, 2, *road(26+n), 6, 7, *road(26+2*n), 10]}],
-            [weights.essen_3_ost, {'path': [0, 1, 2, *road(26+n), 5, 7, 11, 12, 22]}],
-            [weights.essen_6, {'path': [13, 14, 15, *road(26+3*n), 16, 17, 19, 22, 23]}],
-            [weights.essen_5, {'path': [13, 14, 15, *road(26+4*n), 16, 18, 21, 22, 23]}],
-            [weights.essen_4_ost, {'path': [13, 14, 15, *road(26+4*n), 19, 20, *road(26+5*n), 23]}],
-            [weights.essen_4_west, {'path': [13, 14, 15, *road(26+4*n), 19, 20, 24, 25, 10]}],
+            [weights.essen_1, {'path': [0, 1, 2, 26, 3, 4, 6, 9, 10]}],
+            [weights.essen_2, {'path': [0, 1, 2, 26, 3, 5, 8, 9, 10]}],
+            [weights.essen_3_west, {'path': [0, 1, 2, 26, 6, 7, *road(28), 10]}],
+            [weights.essen_3_ost, {'path': [0, 1, 2, 26, 5, 7, 11, 12, 22]}],
+            [weights.essen_6, {'path': [13, 14, 15, 27, 16, 17, 19, 22, 23]}],
+            [weights.essen_5, {'path': [13, 14, 15, 27, 16, 18, 21, 22, 23]}],
+            [weights.essen_4_ost, {'path': [13, 14, 15, 27, 19, 20, *road(28+n), 23]}],
+            [weights.essen_4_west, {'path': [13, 14, 15, 27, 19, 20, 24, 25, 10]}],
         ]
     })
     
