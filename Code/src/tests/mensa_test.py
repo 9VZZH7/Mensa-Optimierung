@@ -48,8 +48,9 @@ def var_speed_and_dist(N_speed, N_dist):
 
 def par_speed_and_dist(N_speed, N_dist):
     eva = np.zeros((N_speed,N_dist + 1))
-    speeds = np.arange(10, 20, 10/N_speed)
-    dists = np.arange(0,1 + 1/N_dist, 1/N_dist)
+    speeds = np.arange(8, 22, 10/N_speed)
+    dists = np.arange(0, 1 + 1/(2*N_dist), 1/(N_dist))
+    print(dists)
     for i in range(len(speeds)):
         speed = speeds[i]
         helper = partial(mensa_helper,steps = 'whole', fixed_cycle = False, v_max = speed)
