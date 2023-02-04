@@ -117,12 +117,12 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
         *THREE_TO_INTERSECT_EAST
     ])
 
-    sim.create_signal([[3]], config={'fixed_cycle':fixed_cycle})
-    sim.create_signal([[6]], config={'fixed_cycle':fixed_cycle})
-    sim.create_signal([[8]], config={'fixed_cycle':fixed_cycle})
-    sim.create_signal([[17]], config={'fixed_cycle':fixed_cycle})
-    sim.create_signal([[20]], config={'fixed_cycle':fixed_cycle})
-    sim.create_signal([[22]], config={'fixed_cycle':fixed_cycle})
+    sim.create_signal([[3]], config={'fixed_cycle': fixed_cycle})
+    sim.create_signal([[6]], config={'fixed_cycle': fixed_cycle})
+    sim.create_signal([[8]], config={'fixed_cycle': fixed_cycle})
+    sim.create_signal([[17]], config={'fixed_cycle': fixed_cycle})
+    sim.create_signal([[20]], config={'fixed_cycle': fixed_cycle})
+    sim.create_signal([[22]], config={'fixed_cycle': fixed_cycle})
 
 
 
