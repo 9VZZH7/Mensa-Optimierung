@@ -49,21 +49,25 @@ def var_speed_and_dist(N_speed, N_dist):
 def par_speed_and_dist(N_speed, N_dist):
     speeds = np.arange(8, 22, 10/N_speed)
     dists = np.arange(0, 1 + 1e-6, 1/(N_dist))
-    eva = np.zeros((len(speeds),len(dists)))
+    eva = np.zeros((len(speeds),len(dists)), dtype = object)
     print(dists, flush=True)
     for i in range(len(speeds)):
         speed = speeds[i]
         helper = partial(mensa_helper,steps = 'whole', fixed_cycle = False, v_max = speed)
         output = Parallel(n_jobs=6)(delayed(helper)(dist) for dist in dists)
         eva[i,:] = output
+    norms = np.zeros_like(eva, dtype = np.float64)
+    for i in range(len(norms)):
+        for j in range(len(norms[i])):
+            norms[i, j] = eva[i, j].norm
     x, y = np.meshgrid(dists, speeds)
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
-    ax.plot_surface(x, y, eva, cmap=cm.RdYlGn_r, linewidth=0, antialiased=False)
+    ax.plot_surface(x, y, norms, cmap=cm.RdYlGn_r, linewidth=0, antialiased=False)
     plt.show()
-    return eva
+    return eva, norms
 
 def mensa_helper(dist,steps, fixed_cycle, v_max):
-    return mensa.run(weights = spawning(dist, 0.5, 0.5), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max).norm
+    return mensa.run(weights = spawning(dist, 0.5, 0.5), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max)
 
 def test_diff_spawning():
     all_same = (2,2,1,1,1,1,2,2)
@@ -77,13 +81,34 @@ def test_diff_spawning():
 
     return all_same_sim, side_heavy_sim, mid_heavy_sim
 
+def test_diff_dishes():
+    all_same = (2,0,1,1,1,1,0,2)
+    one_per_side = mensa.run(steps = 'whole', fixed_cycle = False, v_weight = 'const', weights = const_spawning(*all_same), v_rate = 20)
+
+    side_heavy = (0,0,1,1,1,1,0,0)
+    all_mid = mensa.run(steps = 'whole', fixed_cycle = False, v_weight = 'const', weights = const_spawning(*side_heavy), v_rate = 20)
+
+    mid_heavy = (2,0,1,1,0,0,2,2)
+    less_left = mensa.run(steps = 'whole', fixed_cycle = False, v_weight = 'const', weights = const_spawning(*mid_heavy), v_rate = 20)
+
+    vgl_times = mensa.run(steps = 'whole', fixed_cycle = False, v_weight = 'variable', weights = spawning(0.7,0.5,0.5), v_rate = 20)
+    return one_per_side, all_mid, less_left, vgl_times
+
 def plot_diff_spawning():
     ass, shs, mhs = test_diff_spawning()
-    #fig = plt.figure(figsize = (5,5))
-    #ax = fig.add_axes([0,0,1,1])
     fig, ax = plt.subplots()
     dists = ['Jedes Essen gleich', 'Essen an der Seite beliebt', 'Essen in der Mitte beliebt']
     norms = [ass.norm, shs.norm, mhs.norm]
+    ax.bar(dists,norms)
+    ax.set_ylabel('Waiting Norm')
+    ax.set_title('Influence of distribution on waiting times')
+    plt.show()
+
+def plot_less_dishes():
+    ass, shs, mhs, vgl = test_diff_dishes()
+    fig, ax = plt.subplots()
+    dists = ['Nur ein Gericht pro Seite', 'Nur in der Mitte', 'Merkwürdiges Alternativkonzept', 'Vergleich, Realität']
+    norms = [ass.norm, shs.norm, mhs.norm, vgl.norm]
     ax.bar(dists,norms)
     ax.set_ylabel('Waiting Norm')
     ax.set_title('Influence of distribution on waiting times')
