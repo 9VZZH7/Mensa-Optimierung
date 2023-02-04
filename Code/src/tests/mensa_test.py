@@ -79,10 +79,11 @@ def test_diff_spawning():
     mid_heavy = (1,1,5,5,5,5,1,1)
     mid_heavy_sim = mensa.run(steps = 'whole', fixed_cycle = False, v_weight = 'const', weights = const_spawning(*mid_heavy), v_rate = 20)
 
-    return all_same_sim, side_heavy_sim, mid_heavy_sim
+    vgl_times = mensa.run(steps = 'whole', fixed_cycle = False, v_weight = 'variable', weights = spawning(0.7,0.5,0.5), v_rate = 20)
+    return all_same_sim, side_heavy_sim, mid_heavy_sim, vgl_times
 
 def test_diff_dishes():
-    all_same = (2,0,1,1,1,1,0,2)
+    all_same = (1,0,0,1,1,0,0,1)
     one_per_side = mensa.run(steps = 'whole', fixed_cycle = False, v_weight = 'const', weights = const_spawning(*all_same), v_rate = 20)
 
     side_heavy = (0,0,1,1,1,1,0,0)
@@ -95,10 +96,10 @@ def test_diff_dishes():
     return one_per_side, all_mid, less_left, vgl_times
 
 def plot_diff_spawning():
-    ass, shs, mhs = test_diff_spawning()
+    ass, shs, mhs, vgl = test_diff_spawning()
     fig, ax = plt.subplots()
-    dists = ['Jedes Essen gleich', 'Essen an der Seite beliebt', 'Essen in der Mitte beliebt']
-    norms = [ass.norm, shs.norm, mhs.norm]
+    dists = ['Jedes Essen gleich', 'Essen an der Seite beliebt', 'Essen in der Mitte beliebt', 'Vergleich, Realität']
+    norms = [ass.norm, shs.norm, mhs.norm, vgl.norm]
     ax.bar(dists,norms)
     ax.set_ylabel('Waiting Norm')
     ax.set_title('Influence of distribution on waiting times')
