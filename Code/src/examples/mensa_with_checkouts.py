@@ -174,11 +174,11 @@ def run(steps=100, v_max=16.6, v_rate='variable', v_weight='variable',
     sim.create_signal([[17]], config={'fixed_cycle': fixed_cycle})
     sim.create_signal([[20]], config={'fixed_cycle': fixed_cycle})
     sim.create_signal([[22]], config={'fixed_cycle': fixed_cycle})
-    sim.create_signal([[28]], config={'fixed_cycle': fixed_cycle})
-    sim.create_signal([[30]], config={'fixed_cycle': fixed_cycle})
-    sim.create_signal([[32]], config={'fixed_cycle': fixed_cycle})
-    sim.create_signal([[34]], config={'fixed_cycle': fixed_cycle})
-    sim.create_signal([[36]], config={'fixed_cycle': fixed_cycle})
+    sim.create_signal([[28]], config={'fixed_cycle': 300})
+    sim.create_signal([[30]], config={'fixed_cycle': 300})
+    sim.create_signal([[32]], config={'fixed_cycle': 300})
+    sim.create_signal([[34]], config={'fixed_cycle': 300})
+    sim.create_signal([[36]], config={'fixed_cycle': 300})
 
     def road(a):
         return range(a, a + n)

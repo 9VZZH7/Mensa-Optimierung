@@ -25,6 +25,9 @@ class TrafficSignal:
         self.delay = 0
 
     def init_properties(self):
+        if not isinstance(self.fixed_cycle,bool):
+            self.cycle_delay = self.fixed_cycle
+            self.fixed_cycle = False
         for i in range(len(self.roads)):
             for road in self.roads[i]:
                 road.set_traffic_signal(self, i)
@@ -32,7 +35,7 @@ class TrafficSignal:
     @property
     def current_cycle(self):
         return self.cycle[self.current_cycle_index]
-    
+
     def update(self, sim):
         if self.fixed_cycle:
             cycle_length = 30
@@ -44,10 +47,9 @@ class TrafficSignal:
                 self.current_cycle_index = 0
             else:
                 self.current_cycle_index = 1
-            
-        
+
     def increment(self):
         self.passed_cars += 1
-        self.delay += self.cycle_delay
+        self.delay += self.cycle_delay # self.cycle_delay = 150
         if self.passed_cars % 6 == 0:
-            self.delay += 300
+            self.delay += 2 * self.cycle_delay
