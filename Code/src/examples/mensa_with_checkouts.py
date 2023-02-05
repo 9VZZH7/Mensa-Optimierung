@@ -11,8 +11,7 @@ sys.path.insert(0, parentdir)
 from trafficSimulator import *
 
 
-def run(steps=100, v_max=16.6, v_rate='variable', v_weight='variable',
-        weights=spawning(ostwest=0.5, essen3=0.5, essen4=0.5), fixed_cycle=True):
+def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spawning(ostwest = 0.5,essen3 = 0.5,essen4 = 0.5), fixed_cycle = True, speed_lim = 10):
     sim = Simulation()
 
     n = 15
@@ -69,7 +68,7 @@ def run(steps=100, v_max=16.6, v_rate='variable', v_weight='variable',
 
     # Roads
     STAIRS_TO_EDGE_WEST = (STAIRS_WEST, EDGE_WEST)
-    EDGE_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST, False, 10)
+    EDGE_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST, False, speed_lim)
     RACK_TO_DIVERSION_WEST = (TRAY_RACK_WEST, DIVERSION_WEST)
     DIVERSION_TO_ONE_WEST = (DIVERSION_WEST, FOOD_ONE_WEST)
     DIVERSION_TO_INTERSECT_WEST = (DIVERSION_WEST, FIRST_INTERSECTION_WEST)
@@ -97,7 +96,7 @@ def run(steps=100, v_max=16.6, v_rate='variable', v_weight='variable',
     CHECKOUT_TO_EXIT_THREE = (CHECKOUT_THREE, EXIT_THREE)
 
     STAIRS_TO_EDGE_EAST = (STAIRS_EAST, EDGE_EAST)
-    EDGE_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST, False, 10)
+    EDGE_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST, False, speed_lim)
     RACK_TO_DIVERSION_EAST = (TRAY_RACK_EAST, DIVERSION_EAST)
     DIVERSION_TO_ONE_EAST = (DIVERSION_EAST, FOOD_ONE_EAST)
     DIVERSION_TO_INTERSECT_EAST = (DIVERSION_EAST, FIRST_INTERSECTION_EAST)

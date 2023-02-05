@@ -47,6 +47,7 @@ class Window:
 
         # Draw loop
         running = True
+        self.counter = 0
         while running:
             # Update simulation
             if loop: loop(self.sim)
@@ -56,6 +57,9 @@ class Window:
 
             # Update window
             pygame.display.update()
+            if False:
+                pygame.image.save(self.screen, "../../res/animation/mensa_slow-"+str(self.counter)+".jpeg")
+                self.counter += 1
             clock.tick(self.fps)
 
             # Handle all events
