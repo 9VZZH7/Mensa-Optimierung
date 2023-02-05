@@ -50,11 +50,10 @@ def par_speed_and_dist(N_speed, N_dist):
     speeds = np.arange(8, 22, 10/N_speed)
     dists = np.arange(0, 1 + 1e-6, 1/(N_dist))
     eva = np.zeros((len(speeds),len(dists)), dtype = object)
-    print(dists, flush=True)
     for i in range(len(speeds)):
         speed = speeds[i]
         helper = partial(mensa_helper,steps = 'whole', fixed_cycle = False, v_max = speed)
-        output = Parallel(n_jobs=6)(delayed(helper)(dist) for dist in dists)
+        output = Parallel(n_jobs=5)(delayed(helper)(dist) for dist in dists)
         eva[i,:] = output
     norms = np.zeros_like(eva, dtype = np.float64)
     for i in range(len(norms)):
@@ -64,11 +63,51 @@ def par_speed_and_dist(N_speed, N_dist):
     fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
     ax.plot_surface(x, y, norms, cmap=cm.RdYlGn_r, linewidth=0, antialiased=False)
     plt.show()
-    return eva, norms
+    return eva, norms, fig, ax
 
-def mensa_helper(dist,steps, fixed_cycle, v_max):
-    return mensa.run(weights = spawning(dist, 0.5, 0.5), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max)
+def par_speed_and_dist_const(N_speed, N_dist):
+    speeds = np.arange(8, 22, 10/N_speed)
+    dists = np.arange(0, 1 + 1e-6, 1/(N_dist))
+    eva = np.zeros((len(speeds),len(dists)), dtype = object)
+    for i in range(len(speeds)):
+        speed = speeds[i]
+        helper = partial(mensa_helper,steps = 'whole', fixed_cycle = False, v_max = speed, v_rate = 30)
+        output = Parallel(n_jobs=5)(delayed(helper)(dist) for dist in dists)
+        eva[i,:] = output
+    norms = np.zeros_like(eva, dtype = np.float64)
+    for i in range(len(norms)):
+        for j in range(len(norms[i])):
+            norms[i, j] = eva[i, j].norm
+    x, y = np.meshgrid(dists, speeds)
+    fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+    ax.plot_surface(x, y, norms, cmap=cm.RdYlGn_r, linewidth=0, antialiased=False)
+    plt.show()
+    return eva, norms, fig, ax
 
+def par_speed_and_dist_const_const(N_speed, N_dist):
+    speeds = np.arange(8, 22, 10/N_speed)
+    dists = np.arange(0, 1 + 1e-6, 1/(N_dist))
+    eva = np.zeros((len(speeds),len(dists)), dtype = object)
+    for i in range(len(speeds)):
+        speed = speeds[i]
+        helper = partial(mensa_helper,steps = 'whole', fixed_cycle = False, v_max = speed, v_rate = 32, spawn = 'const')
+        output = Parallel(n_jobs=5)(delayed(helper)(dist) for dist in dists)
+        eva[i,:] = output
+    norms = np.zeros_like(eva, dtype = np.float64)
+    for i in range(len(norms)):
+        for j in range(len(norms[i])):
+            norms[i, j] = eva[i, j].norm
+    x, y = np.meshgrid(dists, speeds)
+    fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+    ax.plot_surface(x, y, norms, cmap=cm.RdYlGn_r, linewidth=0, antialiased=False)
+    plt.show()
+    return eva, norms, fig, ax
+
+def mensa_helper(dist,steps, fixed_cycle, v_max, v_rate = 'variable', spawn = 'var'):
+    if spawn == 'var':
+        return mensa.run(weights = spawning(dist, 0.5, 0.5), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max, v_rate = v_rate)
+    else:
+        return mensa.run(weights = const_spawning(2*(1-dist),2*(1-dist),1-dist,1-dist,dist,dist,2*dist,2*dist), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max, v_rate = v_rate, v_weight = 'const')
 def test_diff_spawning():
     all_same = (2,2,1,1,1,1,2,2)
     all_same_sim = mensa.run(steps = 'whole', fixed_cycle = False, v_weight = 'const', weights = const_spawning(*all_same), v_rate = 20)
@@ -101,8 +140,7 @@ def plot_diff_spawning():
     dists = ['Jedes Essen gleich', 'Essen an der Seite beliebt', 'Essen in der Mitte beliebt', 'Vergleich, Realität']
     norms = [ass.norm, shs.norm, mhs.norm, vgl.norm]
     ax.bar(dists,norms)
-    ax.set_ylabel('Waiting Norm')
-    ax.set_title('Influence of distribution on waiting times')
+    ax.set_ylabel('Warte-Norm')
     plt.show()
 
 def plot_less_dishes():
@@ -111,8 +149,7 @@ def plot_less_dishes():
     dists = ['Nur ein Gericht pro Seite', 'Nur in der Mitte', 'Merkwürdiges Alternativkonzept', 'Vergleich, Realität']
     norms = [ass.norm, shs.norm, mhs.norm, vgl.norm]
     ax.bar(dists,norms)
-    ax.set_ylabel('Waiting Norm')
-    ax.set_title('Influence of distribution on waiting times')
+    ax.set_ylabel('Warte-Norm')
     plt.show()
 
 def test_tabletts_abholen():
