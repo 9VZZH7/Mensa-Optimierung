@@ -1,3 +1,5 @@
+import numpy as np
+
 class TrafficSignal:
     def __init__(self, roads, config={}):
         # Initialize roads
@@ -22,7 +24,7 @@ class TrafficSignal:
         self.passed_cars = 0
         self.fixed_cycle = True
         self.cycle_delay = 150
-        self.delay = 0
+        self.delay = np.random.randint(200,400)
 
     def init_properties(self):
         if not isinstance(self.fixed_cycle,bool):
