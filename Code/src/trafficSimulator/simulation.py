@@ -108,5 +108,5 @@ class Simulation:
                 self.update()
                 
     def evaluate(self):
-        self.norm = np.linalg.norm(self.waiting_times) / len(self.waiting_times)
+        self.norm = np.linalg.norm(self.waiting_times) / np.sqrt(len(self.waiting_times))
                 

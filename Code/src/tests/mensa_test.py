@@ -84,13 +84,13 @@ def par_speed_and_dist_checkouts(N_speed, N_dist):
     plt.show()
     return eva, norms, fig, ax
 
-def par_speed_and_dist_const(N_speed, N_dist):
+def par_speed_and_dist_const(N_speed, N_dist, rate):
     speeds = np.arange(8, 22, 10/N_speed)
     dists = np.arange(0, 1 + 1e-6, 1/(N_dist))
     eva = np.zeros((len(speeds),len(dists)), dtype = object)
     for i in range(len(speeds)):
         speed = speeds[i]
-        helper = partial(mensa_helper,steps = 'whole', fixed_cycle = False, v_max = speed, v_rate = 30)
+        helper = partial(mensa_helper,steps = 'whole', fixed_cycle = False, v_max = speed, v_rate = rate)
         output = Parallel(n_jobs=5)(delayed(helper)(dist) for dist in dists)
         eva[i,:] = output
     norms = np.zeros_like(eva, dtype = np.float64)
@@ -172,7 +172,7 @@ def plot_diff_spawning():
 def plot_less_dishes():
     ass, shs, mhs, vgl = test_diff_dishes()
     fig, ax = plt.subplots()
-    dists = ['Nur ein Gericht pro Seite', 'Nur in der Mitte', 'Merkwürdiges Alternativkonzept', 'Vergleich, Realität']
+    dists = ['Nur ein Gericht pro Seite', 'Nur in der Mitte', 'Alternativkonzept', 'Vergleich, Realität']
     norms = [ass.norm, shs.norm, mhs.norm, vgl.norm]
     ax.bar(dists,norms)
     ax.set_ylabel('Warte-Norm')
