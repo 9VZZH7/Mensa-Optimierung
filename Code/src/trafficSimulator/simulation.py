@@ -71,8 +71,8 @@ class Simulation:
                 if vehicle.current_road_index + 1 < len(vehicle.path):
                     # Update current road to next road
                     vehicle.current_road_index += 1
-                    # Create a copy and reset some vehicle properties
-                    new_vehicle = vehicle # deepcopy(vehicle)
+                    # reset some vehicle properties and advance vehicle to next road
+                    new_vehicle = vehicle
                     new_vehicle.x = 0
                     # Add it to the next road
                     next_road_index = vehicle.path[vehicle.current_road_index]
@@ -106,7 +106,10 @@ class Simulation:
         else:
             for _ in range(steps):
                 self.update()
-                
-    def evaluate(self):
-        self.norm = np.linalg.norm(self.waiting_times) / np.sqrt(len(self.waiting_times))
-                
+
+    def evaluate(self, order = 2):
+        '''
+        Evaluates the given norm of the waiting times.
+
+        '''
+        self.norm = np.linalg.norm(self.waiting_times, ord = order) / np.power(len(self.waiting_times), 1 / order)

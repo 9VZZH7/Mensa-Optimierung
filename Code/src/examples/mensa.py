@@ -1,3 +1,11 @@
+
+'''
+This is a somewhat accurate replication of the canteen at FAU Erlangen Nürnberg
+There are two sets of stairs from which the students get into the canteen, 6
+counters where students can pick up their food and finally 5 check outs
+(not implemented here, check mensa_with_checkouts).
+'''
+
 import numpy as np
 
 import os
@@ -12,42 +20,42 @@ from trafficSimulator import *
 
 def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', weights = spawning(ostwest = 0.5,essen3 = 0.5,essen4 = 0.5), fixed_cycle = True, speed_lim = 10):
     sim = Simulation()
-    
+
     n = 15
-    
+
     # Nodes
     STAIRS_WEST = (-84, 42)
     EDGE_WEST = (-84, 105)
     TRAY_RACK_WEST = (-70, 105)
     DIVERSION_WEST = (-70, 63)
-    
+
     FOOD_ONE_WEST = (-56, 63)
     FOOD_TWO_WEST = (-42, 56)
     FOOD_THREE_WEST = (-14, 49)
-    
+
     FIRST_INTERSECTION_WEST = (-52.5, 56)
     SECOND_INTERSECTION_WEST = (-49, 49)
     THIRD_INTERSECTION_WEST = (-35, 21)
-    
+
     END_WEST = (-35, 0)
-    
+
     STAIRS_EAST = (84, 42)
     EDGE_EAST = (84, 105)
     TRAY_RACK_EAST = (70, 105)
     DIVERSION_EAST = (70, 63)
-    
+
     FOOD_ONE_EAST = (56, 63)
     FOOD_TWO_EAST = (42, 56)
     FOOD_THREE_EAST = (14, 49)
-    
+
     FIRST_INTERSECTION_EAST = (52.5, 56)
     SECOND_INTERSECTION_EAST = (49, 49)
     THIRD_INTERSECTION_EAST = (35, 21)
-    
+
     END_EAST = (35, 0)
-    
+
     CROSS_INTERSECTION = (0, 41)
-    
+
     # Roads
     STAIRS_TO_EDGE_WEST = (STAIRS_WEST, EDGE_WEST)
     EDGE_TO_RACK_WEST = (EDGE_WEST, TRAY_RACK_WEST, False, speed_lim)
@@ -65,7 +73,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     INTERSECT_TO_END_WEST = (THIRD_INTERSECTION_WEST, END_WEST, True)
     THREE_WEST_TO_CROSS_INTERSECT = (FOOD_THREE_WEST, CROSS_INTERSECTION)
     CROSS_INTERSECT_TO_ALL_EAST = (CROSS_INTERSECTION, THIRD_INTERSECTION_EAST)
-    
+
     STAIRS_TO_EDGE_EAST = (STAIRS_EAST, EDGE_EAST)
     EDGE_TO_RACK_EAST = (EDGE_EAST, TRAY_RACK_EAST, False, speed_lim)
     RACK_TO_DIVERSION_EAST = (TRAY_RACK_EAST, DIVERSION_EAST)
@@ -82,8 +90,8 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
     INTERSECT_TO_END_EAST = (THIRD_INTERSECTION_EAST, END_EAST, True)
     THREE_EAST_TO_CROSS_INTERSECT = (FOOD_THREE_EAST, CROSS_INTERSECTION)
     CROSS_INTERSECT_TO_ALL_WEST = (CROSS_INTERSECTION, THIRD_INTERSECTION_WEST)
-    
-    
+
+
     sim.create_roads([
         STAIRS_TO_EDGE_WEST,
         EDGE_TO_RACK_WEST,
@@ -127,7 +135,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
 
 
     def road(a): return range(a, a+n)
-    
+
     sim.create_gen({
         'vehicle_rate': v_rate,
         'vehicle_weight': v_weight, # can be set to variable. Weight needs to be callable
@@ -143,7 +151,7 @@ def run(steps = 100, v_max = 16.6, v_rate = 'variable', v_weight = 'variable', w
             [weights.essen_4_west, {'path': [14, 15, 16, 18, 21, 22, 26, 27, 11]}]
         ]
     })
-    
+
     # Start simulation
     if steps == 'whole':
         sim.run('whole')

@@ -95,10 +95,11 @@ class Road:
                         factor = (self.length - first.x)/(self.intersection_slow_distance) \
                                     * self.intersection_slow_factor
                         first.slow(factor * first._v_max)
+                        # Stop vehicles in the stop zone
                         if first.x >= self.length - self.intersection_stop_distance and\
                             first.x <= self.length - self.intersection_stop_distance / 2:
-                            # Stop vehicles in the stop zone
                             first.stop()
+                   # if first is at index 0 of waiting queue it can pass
                     else:
                         first.unstop()
                         for vehicle in self.vehicles:

@@ -1,3 +1,9 @@
+'''
+Unoptimized (realistic) day at the canteen. As one can see there are some
+problems during peak periods. A lot of students have to wait long times to get
+their food.
+'''
+
 from trafficSimulator import *
 from examples import mensa, mensa_with_checkouts
 

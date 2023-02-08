@@ -1,3 +1,8 @@
+
+'''
+This implementation is similar to mensa.py but with added 5 checkouts.
+'''
+
 import numpy as np
 
 import os

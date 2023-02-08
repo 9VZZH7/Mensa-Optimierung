@@ -39,10 +39,13 @@ class TrafficSignal:
         return self.cycle[self.current_cycle_index]
 
     def update(self, sim):
+        # switches state every 30 ticks
         if self.fixed_cycle:
             cycle_length = 30
             k = (sim.t // cycle_length) % 2
             self.current_cycle_index = int(k)
+        # switches state based on the given delay, this is used to simulate a
+        # more realistic canteen
         else:
             self.delay = max(0, self.delay - 1)
             if self.delay > 0:
@@ -51,6 +54,12 @@ class TrafficSignal:
                 self.current_cycle_index = 1
 
     def increment(self):
+        '''
+            increment runs whenever a vehicle passes this traffic light.
+            It simulates a little delay after every person. Additionally there
+            is an longer delay after every 6th car to simulate the times it
+            takes to prepare more dishes.
+        '''
         self.passed_cars += 1
         self.delay += self.cycle_delay # self.cycle_delay = 150
         if self.passed_cars % 6 == 0:

@@ -30,7 +30,7 @@ class Window:
 
     def loop(self, loop=None):
         """Shows a window visualizing the simulation and runs the loop function."""
-        
+
         # Create a pygame window
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.flip()
@@ -57,8 +57,9 @@ class Window:
 
             # Update window
             pygame.display.update()
+            # if set to True every frame of the simulation is saved as an image
             if False:
-                pygame.image.save(self.screen, "../../res/animation/mensa_slow-"+str(self.counter)+".jpeg")
+                pygame.image.save(self.screen, "./mensa-"+str(self.counter)+".jpeg")
                 self.counter += 1
             clock.tick(self.fps)
 
@@ -80,7 +81,7 @@ class Window:
                         # Mouse wheel up
                         self.zoom *=  (self.zoom**2+self.zoom/4+1) / (self.zoom**2+1)
                     if event.button == 5:
-                        # Mouse wheel down 
+                        # Mouse wheel down
                         self.zoom *= (self.zoom**2+1) / (self.zoom**2+self.zoom/4+1)
                 elif event.type == pygame.MOUSEMOTION:
                     # Drag content
@@ -89,7 +90,7 @@ class Window:
                         x2, y2 = pygame.mouse.get_pos()
                         self.offset = ((x2-x1)/self.zoom, (y2-y1)/self.zoom)
                 elif event.type == pygame.MOUSEBUTTONUP:
-                    self.mouse_down = False 
+                    self.mouse_down = False
             if self.sim.real_time >= 10200:
                 self.sim.evaluate()
                 running = False
@@ -163,7 +164,7 @@ class Window:
 
         if angle:
             cos, sin = np.cos(angle), np.sin(angle)
-        
+
         vertex = lambda e1, e2: (
             x + (e1*l*cos + e2*h*sin)/2,
             y + (e1*l*sin - e2*h*cos)/2
@@ -186,7 +187,7 @@ class Window:
     def arrow(self, pos, size, angle=None, cos=None, sin=None, color=(150, 150, 190)):
         if angle:
             cos, sin = np.cos(angle), np.sin(angle)
-        
+
         self.rotated_box(
             pos,
             size,
@@ -264,7 +265,7 @@ class Window:
             # )
 
             # Draw road arrow
-            if road.length > 5: 
+            if road.length > 5:
                 for i in np.arange(-0.5*road.length, 0.5*road.length, 10):
                     pos = (
                         road.start[0] + (road.length/2 + i + 3) * road.angle_cos,
@@ -276,8 +277,8 @@ class Window:
                         (-1.25, 0.2),
                         cos=road.angle_cos,
                         sin=road.angle_sin
-                    )   
-            
+                    )
+
 
 
             # TODO: Draw road arrow
@@ -286,8 +287,8 @@ class Window:
         l, h = vehicle.l,  2
         sin, cos = road.angle_sin, road.angle_cos
 
-        x = road.start[0] + cos * vehicle.x 
-        y = road.start[1] + sin * vehicle.x 
+        x = road.start[0] + cos * vehicle.x
+        y = road.start[1] + sin * vehicle.x
 
         self.rotated_box((x, y), (l, h), cos=cos, sin=sin, centered=True)
 
@@ -304,7 +305,7 @@ class Window:
                 for road in signal.roads[i]:
                     a = 0
                     position = (
-                        (1-a)*road.end[0] + a*road.start[0],        
+                        (1-a)*road.end[0] + a*road.start[0],
                         (1-a)*road.end[1] + a*road.start[1]
                     )
                     self.rotated_box(
@@ -314,19 +315,25 @@ class Window:
                         color=color)
 
     def draw_status(self):
+        '''
+        Draws current time 11:30am to 2:20pm
+        '''
         hours = 11 + int((self.sim.real_time / 60 + 30) / 60)
         mins = int((self.sim.real_time) // 60 + 30) % 60
-        #sec = int((self.sim.real_time) % 60) 
+        #sec = int((self.sim.real_time) % 60)
         if mins < 10:
             text_fps = self.text_font.render(f'Uhrzeit = {hours}:0{mins}', False, (0, 0, 0))
-        else: 
+        else:
             text_fps = self.text_font.render(f'Uhrzeit = {hours}:{mins}', False, (0, 0, 0))
         text_vhc = self.text_font.render(f'Studenten = {self.sim.num_vehicles}', False, (0, 0, 0))
-        
+
         self.screen.blit(text_fps, (0, 0))
         self.screen.blit(text_vhc, (0, 15))
 
     def draw_counters(self):
+        '''
+        Adds some decoration that somewhat looks like the canteen at FAU
+        '''
         self.box((625, 650), (150, 30), (150, 150, 150))
         self.box((625, 420), (150, 150), (150, 150, 150))
         self.box((625, 220), (150, 150), (150, 150, 150)) # activate only in mensa_with_checkouts.py
@@ -350,4 +357,3 @@ class Window:
 
         # Draw status info
         self.draw_status()
-        
