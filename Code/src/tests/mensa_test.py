@@ -126,13 +126,13 @@ def mensa_helper(dist,steps, fixed_cycle, v_max, v_rate = 'variable', spawn = 'v
     if spawn == 'var':
         return mensa.run(weights = spawning(dist, 0.5, 0.5), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max, v_rate = v_rate)
     else:
-        return mensa.run(weights = const_spawning(2*(1-dist),2*(1-dist),1-dist,1-dist,dist,dist,2*dist,2*dist), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max, v_rate = v_rate, v_weight = 'const')
+        return mensa.run(weights = const_spawning(2*(dist),2*(dist),dist,dist,1-dist,1-dist,2*(1-dist),2*(1-dist)), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max, v_rate = v_rate, v_weight = 'const')
 
 def mensa_checkout_helper(dist,steps, fixed_cycle, v_max, v_rate = 'variable', spawn = 'var'):
     if spawn == 'var':
         return mensa_with_checkouts.run(weights = spawning(dist, 0.5, 0.5), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max, v_rate = v_rate)
     else:
-        return mensa_with_checkouts.run(weights = const_spawning(2*(1-dist),2*(1-dist),1-dist,1-dist,dist,dist,2*dist,2*dist), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max, v_rate = v_rate, v_weight = 'const')
+        return mensa_with_checkouts.run(weights = const_spawning(2*(dist),2*(dist),dist,dist,1-dist,1-dist,2*(1-dist),2*(1-dist)), steps = steps, fixed_cycle = fixed_cycle, v_max = v_max, v_rate = v_rate, v_weight = 'const')
 
 def test_diff_spawning():
     all_same = (2,2,1,1,1,1,2,2)
